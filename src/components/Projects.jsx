@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Code } from 'lucide-react';
 import { projects } from '../data/projects';
 
+import { Link } from 'react-router-dom';
+
 const ProjectCard = ({ project }) => {
   return (
     <motion.div 
@@ -13,25 +15,24 @@ const ProjectCard = ({ project }) => {
       transition={{ duration: 0.3 }}
       className="project-card glass"
     >
-      <div className="project-image-container">
-        <img src={project.image} alt={project.title} className="project-image" />
-        <div className="project-overlay">
-          <div className="project-links">
-            <a href={project.link} className="icon-link"><ExternalLink size={20} /></a>
-            <a href={project.repo} className="icon-link"><Code size={20} /></a>
+      <Link to={`/project/${project.id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+        <div className="project-image-container">
+          <img src={project.image} alt={project.title} className="project-image" />
+          <div className="project-overlay">
+            <span className="btn btn-primary" style={{ pointerEvents: 'none' }}>View Details</span>
           </div>
         </div>
-      </div>
-      <div className="project-info">
-        <span className="project-type">{project.type}</span>
-        <h3 className="project-title">{project.title}</h3>
-        <p className="project-desc">{project.description}</p>
-        <div className="project-tags">
-          {project.tags.map(tag => (
-            <span key={tag} className="tag">{tag}</span>
-          ))}
+        <div className="project-info">
+          <span className="project-type">{project.type}</span>
+          <h3 className="project-title">{project.title}</h3>
+          <p className="project-desc">{project.description}</p>
+          <div className="project-tags">
+            {project.tags.map(tag => (
+              <span key={tag} className="tag">{tag}</span>
+            ))}
+          </div>
         </div>
-      </div>
+      </Link>
     </motion.div>
   );
 };

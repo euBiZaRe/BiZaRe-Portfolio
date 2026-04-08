@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Rocket } from 'lucide-react';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,22 +23,40 @@ const Navbar = () => {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    setIsOpen(false);
+    
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+        else window.scrollTo(0, 0);
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      else window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-content">
-        <a href="#home" className="logo">
+        <Link to="/" className="logo" onClick={() => window.scrollTo(0, 0)}>
           <Rocket size={24} color="#7c3aed" />
           <span className="logo-text">BiZaRe</span>
-        </a>
+        </Link>
 
         <ul className="nav-links desktop">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a href={link.href}>{link.name}</a>
+              <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
             </li>
           ))}
           <li>
-            <a href="#contact" className="btn-primary">Hire Me</a>
+            <a href="#contact" className="btn-primary" onClick={(e) => handleNavClick(e, '#contact')}>Hire Me</a>
           </li>
         </ul>
 
@@ -48,7 +69,7 @@ const Navbar = () => {
         <ul>
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a href={link.href} onClick={() => setIsOpen(false)}>{link.name}</a>
+              <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
             </li>
           ))}
         </ul>
