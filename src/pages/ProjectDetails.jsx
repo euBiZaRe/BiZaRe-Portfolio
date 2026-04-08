@@ -56,12 +56,7 @@ const ProjectDetails = () => {
             <div className="project-details-actions" style={{ display: 'flex', gap: '15px' }}>
               {project.link !== '#' && (
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <ExternalLink size={20} /> View Project / Get It Here
-                </a>
-              )}
-              {project.repo !== '#' && (
-                <a href={project.repo} target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <Code size={20} /> View Source Code
+                  <ExternalLink size={20} /> {project.type === 'Website' ? 'View Here' : 'Get It Here'}
                 </a>
               )}
             </div>
