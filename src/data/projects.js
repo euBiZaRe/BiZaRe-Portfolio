@@ -51,7 +51,7 @@ export const projects = [
     ],
     type: "Application",
     tags: ["Flutter", "Dart", "Windows", "Android", "Cross-Platform"],
-    link: "https://www.aerobyte.shop/",
+    link: "https://www.aerobyte.shop/cinema.html",
     repo: "#",
     image: `${base}images/aerobyte_cinema.png`
   },
@@ -70,7 +70,7 @@ export const projects = [
     ],
     type: "Application",
     tags: ["C#", "BepInEx", "IL2CPP", "Game Modding"],
-    link: "https://www.aerobyte.shop/",
+    link: "https://www.aerobyte.shop/among-us-mod-menu.html",
     repo: "#",
     image: `${base}images/among_us_mod.png`
   },
@@ -89,7 +89,7 @@ export const projects = [
     ],
     type: "Application",
     tags: ["Python", "C++", "C#", "Reinforcement Learning", "RLBot"],
-    link: "https://www.aerobyte.shop/",
+    link: "https://www.aerobyte.shop/rl-bot-trainer.html",
     repo: "#",
     image: `${base}images/rl_bot.png`
   }
