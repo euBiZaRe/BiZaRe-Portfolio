@@ -1,8 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Code, Layout, AppWindow } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="home" className="hero">
       <div className="container hero-container">
@@ -47,10 +65,10 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8, duration: 0.8 }}
           >
-            <a href="#projects" className="btn-primary">
+            <a href="#projects" className="btn-primary" onClick={(e) => handleNavClick(e, '#projects')}>
               View My Work <ArrowRight size={18} />
             </a>
-            <a href="#about" className="btn-secondary">
+            <a href="#about" className="btn-secondary" onClick={(e) => handleNavClick(e, '#about')}>
               About Me
             </a>
           </motion.div>

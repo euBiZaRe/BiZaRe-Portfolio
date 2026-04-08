@@ -1,7 +1,27 @@
 import React from 'react';
 import { Code, MessageSquare, Share2, Mail } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.querySelector(href);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+        else window.scrollTo(0, 0);
+      }, 100);
+    } else {
+      const element = document.querySelector(href);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+      else window.scrollTo(0, 0);
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="container">
@@ -14,10 +34,10 @@ const Footer = () => {
           <div className="footer-links">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="#home" onClick={(e) => handleNavClick(e, '#home')}>Home</a></li>
+              <li><a href="#projects" onClick={(e) => handleNavClick(e, '#projects')}>Projects</a></li>
+              <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
+              <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a></li>
             </ul>
           </div>
 
