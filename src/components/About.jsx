@@ -4,10 +4,10 @@ import { User, Cpu, Globe, Zap } from 'lucide-react';
 
 const About = () => {
   const skills = [
-    { icon: <Globe size={20} />, title: "Web Dev", desc: "React, Next.js, Vue" },
-    { icon: <Cpu size={20} />, title: "Backend", desc: "Node.js, Python, SQL" },
-    { icon: <Zap size={20} />, title: "Performance", desc: "Optimization, SEO" },
-    { icon: <User size={20} />, title: "UI/UX", desc: "Figma, Canvas" },
+    { icon: <Globe size={20} />, title: "Web Dev", desc: "HTML, CSS, JavaScript, React" },
+    { icon: <Cpu size={20} />, title: "Software & AI", desc: "Python, C++, C#, Dart" },
+    { icon: <Zap size={20} />, title: "Frameworks", desc: "Flutter, Node.js, Firebase, BepInEx" },
+    { icon: <User size={20} />, title: "Other Skills", desc: "SQL, Git, Figma, Web Design" },
   ];
 
   return (
