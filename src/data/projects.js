@@ -1,3 +1,5 @@
+const base = import.meta.env.BASE_URL;
+
 export const projects = [
   {
     id: 1,
@@ -7,7 +9,7 @@ export const projects = [
     tags: ["HTML", "CSS", "JavaScript", "Firebase"],
     link: "https://eubizare.github.io/grid-up-racing-website/index.html",
     repo: "https://github.com/eubizare/grid-up-racing-website",
-    image: "/images/grid_up.png"
+    image: `${base}images/grid_up.png`
   },
   {
     id: 2,
@@ -17,7 +19,7 @@ export const projects = [
     tags: ["E-Commerce", "Web Design", "Branding"],
     link: "https://www.aerobyte.shop/",
     repo: "#",
-    image: "/images/aerobyte_shop.png"
+    image: `${base}images/aerobyte_shop.png`
   },
   {
     id: 3,
@@ -27,26 +29,26 @@ export const projects = [
     tags: ["Flutter", "Dart", "Windows", "Android", "Cross-Platform"],
     link: "https://www.aerobyte.shop/",
     repo: "#",
-    image: "/images/aerobyte_cinema.png"
+    image: `${base}images/aerobyte_cinema.png`
   },
   {
     id: 4,
     title: "AeroByte Among Us Mod Menu",
-    description: "A premium BepInEx mod menu for Among Us (Steam IL2CPP). Features AeroSpeed, Quantum No-Clip, AeroVision, a real-time tactical radar with threat detection, map-aware teleportation for all 4 maps, host lobby tools, and a gold-standard animated UI — all packed into a single DLL.",
+    description: "A premium BepInEx mod menu for Among Us (Steam IL2CPP). Features an intuitive 7-tab interface with comprehensive movement and visual cheats, including speed hack, crewmate venting, no-clip, impostor ESP, role reveals, satellite view, and anti-lights. Built with a sleek animated UI and tools for hosting, sabotage control, teleportation, and radar — all packed into a single DLL.",
     type: "Application",
     tags: ["C#", "BepInEx", "IL2CPP", "Game Modding"],
     link: "#",
     repo: "#",
-    image: "/images/among_us_mod.png"
+    image: `${base}images/among_us_mod.png`
   },
   {
     id: 5,
-    title: "AeroByte AI Rocket League Bot",
-    description: "A deep reinforcement learning agent for Rocket League, built on top of RLGym and RocketSim. Uses a custom PPO learner with a C++ physics engine for simulation, a WPF GUI trainer dashboard (GigaLearnGUI), and a Python/C++ RLBot client for live in-game play.",
+    title: "AeroByte AI Rocket League Bot Trainer",
+    description: "A deep reinforcement learning agent for Rocket League, built on top of RLGym and RocketSim. Features a sleek, dark-themed GUI trainer dashboard with real-time telemetry monitoring, multi-tier engine core modes (Potato to SSL Ultra), and integrated terminal logs for process tracking. Powered by a custom PPO learner with a C++ physics engine for simulation.",
     type: "Application",
     tags: ["Python", "C++", "C#", "Reinforcement Learning", "RLBot"],
     link: "#",
     repo: "#",
-    image: "/images/rl_bot.png"
+    image: `${base}images/rl_bot.png`
   }
 ];
