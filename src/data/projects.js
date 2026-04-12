@@ -94,3 +94,30 @@ export const projects = [
     image: `${base}images/rl_bot.png`
   }
 ];
+
+export const inProgressProjects = [
+  {
+    id: 'ip1',
+    title: "AeroByte Overlay V2",
+    status: "Designing V2 Interface",
+    progress: 65,
+    description: "Rebuilding the core telemetry overlay system with a focus on high-performance rendering, modular widgets, and a modern racing-inspired UI. Implementing advanced resizing and customization features.",
+    tags: ["Electron", "React", "Canvas API", "Overlay"],
+  },
+  {
+    id: 'ip2',
+    title: "Grid Up League Manager",
+    status: "Building API Layer",
+    progress: 40,
+    description: "A centralized management system for sim racing leagues. Automating race tracking, driver ratings, and Discord-based reporting systems for large-scale communities.",
+    tags: ["Node.js", "Firebase", "Discord SDK", "API"],
+  },
+  {
+    id: 'ip3',
+    title: "AeroByte App Ecosystem",
+    status: "Planning Phase",
+    progress: 15,
+    description: "Developing a unified launcher and updater for all AeroByte tools and applications, ensuring seamless updates and a consistent user experience across the entire product line.",
+    tags: ["Flutter", "Cross-Platform", "Automation"],
+  }
+];
