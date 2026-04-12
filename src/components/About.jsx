@@ -32,6 +32,9 @@ const About = () => {
               of user needs, ensuring that every project I touch is not only 
               functional but also delightful to use.
             </p>
+            <p className="about-description font-bold text-gradient mt-6" style={{ fontSize: '1.2rem', fontWeight: '700' }}>
+              No project is too big or too small.
+            </p>
           </motion.div>
 
           <div className="skills-grid">
