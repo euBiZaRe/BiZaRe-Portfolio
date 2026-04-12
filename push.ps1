@@ -13,7 +13,7 @@ if ($status) {
     git commit -m "$message"
     
     # Push to origin
-    git push
+    git push origin HEAD
     
     # Deploy to GitHub Pages
     Write-Host "Deploying to GitHub Pages..." -ForegroundColor Cyan
