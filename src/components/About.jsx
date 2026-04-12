@@ -33,7 +33,7 @@ const About = () => {
               functional but also delightful to use.
             </p>
             <p className="about-description font-bold text-gradient mt-6" style={{ fontSize: '1.2rem', fontWeight: '700' }}>
-              No project is too big or too small.
+              No project is too big or too small. Each is built with precision.
             </p>
           </motion.div>
 

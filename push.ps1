@@ -15,6 +15,10 @@ if ($status) {
     # Push to origin
     git push
     
+    # Deploy to GitHub Pages
+    Write-Host "Deploying to GitHub Pages..." -ForegroundColor Cyan
+    npm run deploy
+    
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Success: Changes pushed to GitHub." -ForegroundColor Green
     } else {
