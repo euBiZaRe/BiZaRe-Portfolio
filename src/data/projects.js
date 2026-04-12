@@ -98,7 +98,7 @@ export const projects = [
 export const inProgressProjects = [
   {
     id: 'ip1',
-    title: "AeroByte Overlay V2",
+    title: "AeroByte iRacing Overlay V2",
     status: "Designing V2 Interface",
     progress: 65,
     description: "Rebuilding the core telemetry overlay system with a focus on high-performance rendering, modular widgets, and a modern racing-inspired UI. Implementing advanced resizing and customization features.",
@@ -106,18 +106,18 @@ export const inProgressProjects = [
   },
   {
     id: 'ip2',
-    title: "Grid Up League Manager",
-    status: "Building API Layer",
-    progress: 40,
-    description: "A centralized management system for sim racing leagues. Automating race tracking, driver ratings, and Discord-based reporting systems for large-scale communities.",
-    tags: ["Node.js", "Firebase", "Discord SDK", "API"],
+    title: "AeroByte Liar's Bar Menu",
+    status: "Building Features",
+    progress: 85,
+    description: "A premium bot menu for Liar's Bar featuring real-time card omniscience, history tracking, death prediction, and revolver bullet manipulation. Built for stability and visual excellence.",
+    tags: ["C#", "Unity Hooks", "Game Modding", "UI Design"],
   },
   {
     id: 'ip3',
-    title: "AeroByte App Ecosystem",
+    title: "Grid Up League Manager",
     status: "Planning Phase",
     progress: 15,
-    description: "Developing a unified launcher and updater for all AeroByte tools and applications, ensuring seamless updates and a consistent user experience across the entire product line.",
-    tags: ["Flutter", "Cross-Platform", "Automation"],
+    description: "A centralized management system for sim racing leagues. Automating race tracking, driver ratings, and Discord-based reporting systems for large-scale communities.",
+    tags: ["Node.js", "Firebase", "Discord SDK", "API"],
   }
 ];
