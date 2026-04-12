@@ -114,10 +114,18 @@ export const inProgressProjects = [
   },
   {
     id: 'ip3',
-    title: "Grid Up League Manager",
-    status: "Planning Phase",
-    progress: 15,
-    description: "A centralized management system for sim racing leagues. Automating race tracking, driver ratings, and Discord-based reporting systems for large-scale communities.",
-    tags: ["Node.js", "Firebase", "Discord SDK", "API"],
+    title: "AeroByte External CS2",
+    status: "Feature Integration",
+    progress: 75,
+    description: "A high-performance external solution for Counter-Strike 2. Features advanced ESP, Glow, Radar, and humanized Aimbot/Triggerbot systems designed for maximum security.",
+    tags: ["C++", "D3D11", "Kernel Hooks", "CS2"],
+  },
+  {
+    id: 'ip4',
+    title: "AeroByte Internal CS2",
+    status: "Security Hardening",
+    progress: 40,
+    description: "A powerful internal cheat for Counter-Strike 2 with a seamless in-game interface. Includes RCS, Skin Changer, and advanced visibility-checked visuals.",
+    tags: ["C++", "Internal", "MSVC", "Game Hooking"],
   }
 ];
