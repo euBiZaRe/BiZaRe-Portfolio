@@ -13,9 +13,7 @@ if ($status) {
     git commit -m "$message"
     
     # Push to origin
-    # Note: Vite projects often use 'main' instead of 'master'
-    $branch = git branch --show-current
-    git push origin $branch
+    git push
     
     if ($LASTEXITCODE -eq 0) {
         Write-Host "Success: Changes pushed to GitHub." -ForegroundColor Green
