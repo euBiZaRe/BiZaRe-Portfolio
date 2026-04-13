@@ -1101,6 +1101,18 @@ section {
   cursor: wait;
 }
 
+.disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+.disabled-btn:hover {
+  transform: none !important;
+  background: var(--primary) !important;
+}
+
+
 .status-message {
   padding: 12px 20px;
   border-radius: 8px;

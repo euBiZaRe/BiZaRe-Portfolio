@@ -12,6 +12,8 @@ const Admin = () => {
   const [showCode, setShowCode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
+  const isDev = import.meta.env.DEV;
+
 
 
   // New Project State
@@ -62,6 +64,14 @@ const Admin = () => {
   };
 
   const handleSave = async () => {
+    if (!isDev) {
+      setSaveStatus({ 
+        type: 'error', 
+        message: 'Auto-save is only available in the local development environment. Please use "Generate Source" and paste it into projects.js for production updates.' 
+      });
+      return;
+    }
+
     setIsSaving(true);
     setSaveStatus({ type: '', message: '' });
     try {
@@ -70,6 +80,12 @@ const Admin = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projects })
       });
+      
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Local dev server API not found. Make sure you are running 'npm run dev'.");
+      }
+
       const data = await response.json();
       if (data.success) {
         setSaveStatus({ type: 'success', message: 'Projects successfully saved!' });
@@ -78,11 +94,13 @@ const Admin = () => {
         throw new Error(data.error || 'Failed to save projects');
       }
     } catch (err) {
+      console.error("Save Error:", err);
       setSaveStatus({ type: 'error', message: err.message });
     } finally {
       setIsSaving(false);
     }
   };
+
 
 
   if (!isLoggedIn) {
@@ -183,12 +201,14 @@ const Admin = () => {
               <h3>Manage In-Progress Projects</h3>
               <div className="header-actions">
                 <button 
-                  className={`btn-primary save-btn ${isSaving ? 'loading' : ''}`}
+                  className={`btn-primary save-btn ${isSaving ? 'loading' : ''} ${!isDev ? 'disabled-btn' : ''}`}
                   onClick={handleSave}
                   disabled={isSaving}
+                  title={!isDev ? "Auto-save only works in local dev environment" : "Save to projects.js"}
                 >
                   <Save size={16} /> {isSaving ? 'Saving...' : 'Save Changes'}
                 </button>
+
                 <button 
                   className="btn-secondary sync-btn"
                   onClick={() => setShowCode(!showCode)}
