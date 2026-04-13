@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Hammer, Rocket } from 'lucide-react';
-import { inProgressProjects } from '../data/projects';
+import { inProgressProjects as fallbackProjects } from '../data/projects';
+import { db } from '../firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
+
 
 const InProgressCard = ({ project }) => {
   return (
@@ -44,6 +47,21 @@ const InProgressCard = ({ project }) => {
 };
 
 const InProgressProjects = () => {
+  const [projects, setProjects] = useState(fallbackProjects);
+
+  useEffect(() => {
+    // Listen for real-time updates from Firestore
+    const unsub = onSnapshot(doc(db, 'in_progress_projects', 'current'), (docSnap) => {
+      if (docSnap.exists()) {
+        setProjects(docSnap.data().projects);
+      }
+    }, (error) => {
+      console.error("Firestore listen error:", error);
+    });
+
+    return () => unsub();
+  }, []);
+
   return (
     <section id="in-progress" className="in-progress">
       <div className="container">
@@ -68,7 +86,7 @@ const InProgressProjects = () => {
         </div>
 
         <div className="in-progress-grid">
-          {inProgressProjects.map((project) => (
+          {projects.map((project) => (
             <InProgressCard key={project.id} project={project} />
           ))}
         </div>
@@ -76,5 +94,6 @@ const InProgressProjects = () => {
     </section>
   );
 };
+
 
 export default InProgressProjects;

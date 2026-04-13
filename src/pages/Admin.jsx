@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Plus, Trash2, Edit2, Save, X, ExternalLink, Code as CodeIcon, LogOut } from 'lucide-react';
 import { inProgressProjects as initialProjects } from '../data/projects';
+import { db } from '../firebase';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+
+
 
 const Admin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -13,6 +17,22 @@ const Admin = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
   const isDev = import.meta.env.DEV;
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const docRef = doc(db, 'in_progress_projects', 'current');
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setProjects(docSnap.data().projects);
+        }
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    };
+    fetchProjects();
+  }, []);
+
 
 
 
@@ -64,42 +84,24 @@ const Admin = () => {
   };
 
   const handleSave = async () => {
-    if (!isDev) {
-      setSaveStatus({ 
-        type: 'error', 
-        message: 'Auto-save is only available in the local development environment. Please use "Generate Source" and paste it into projects.js for production updates.' 
-      });
-      return;
-    }
-
     setIsSaving(true);
     setSaveStatus({ type: '', message: '' });
     try {
-      const response = await fetch('/api/save-projects', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projects })
+      await setDoc(doc(db, 'in_progress_projects', 'current'), {
+        projects: projects,
+        lastUpdated: serverTimestamp()
       });
       
-      const contentType = response.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("Local dev server API not found. Make sure you are running 'npm run dev'.");
-      }
-
-      const data = await response.json();
-      if (data.success) {
-        setSaveStatus({ type: 'success', message: 'Projects successfully saved!' });
-        setTimeout(() => setSaveStatus({ type: '', message: '' }), 3000);
-      } else {
-        throw new Error(data.error || 'Failed to save projects');
-      }
+      setSaveStatus({ type: 'success', message: 'Projects successfully saved to Cloud (Live Update)!' });
+      setTimeout(() => setSaveStatus({ type: '', message: '' }), 3000);
     } catch (err) {
       console.error("Save Error:", err);
-      setSaveStatus({ type: 'error', message: err.message });
+      setSaveStatus({ type: 'error', message: 'Firebase Error: ' + err.message });
     } finally {
       setIsSaving(false);
     }
   };
+
 
 
 
@@ -201,13 +203,14 @@ const Admin = () => {
               <h3>Manage In-Progress Projects</h3>
               <div className="header-actions">
                 <button 
-                  className={`btn-primary save-btn ${isSaving ? 'loading' : ''} ${!isDev ? 'disabled-btn' : ''}`}
+                  className={`btn-primary save-btn ${isSaving ? 'loading' : ''}`}
                   onClick={handleSave}
                   disabled={isSaving}
-                  title={!isDev ? "Auto-save only works in local dev environment" : "Save to projects.js"}
+                  title="Save to Firebase for Live Updates"
                 >
                   <Save size={16} /> {isSaving ? 'Saving...' : 'Save Changes'}
                 </button>
+
 
                 <button 
                   className="btn-secondary sync-btn"
