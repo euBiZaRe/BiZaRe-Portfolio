@@ -10,6 +10,9 @@ const Admin = () => {
   const [projects, setProjects] = useState(initialProjects);
   const [editingId, setEditingId] = useState(null);
   const [showCode, setShowCode] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
+
 
   // New Project State
   const [newProject, setNewProject] = useState({
@@ -57,6 +60,30 @@ const Admin = () => {
     const code = `export const inProgressProjects = ${JSON.stringify(projects, null, 2)};`;
     return code;
   };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    setSaveStatus({ type: '', message: '' });
+    try {
+      const response = await fetch('/api/save-projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projects })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSaveStatus({ type: 'success', message: 'Projects successfully saved!' });
+        setTimeout(() => setSaveStatus({ type: '', message: '' }), 3000);
+      } else {
+        throw new Error(data.error || 'Failed to save projects');
+      }
+    } catch (err) {
+      setSaveStatus({ type: 'error', message: err.message });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
 
   if (!isLoggedIn) {
     return (
@@ -154,13 +181,33 @@ const Admin = () => {
           <div className="manage-projects">
             <div className="manage-header">
               <h3>Manage In-Progress Projects</h3>
-              <button 
-                className="btn-secondary sync-btn"
-                onClick={() => setShowCode(!showCode)}
-              >
-                <CodeIcon size={16} /> {showCode ? 'Close Source' : 'Generate Source'}
-              </button>
+              <div className="header-actions">
+                <button 
+                  className={`btn-primary save-btn ${isSaving ? 'loading' : ''}`}
+                  onClick={handleSave}
+                  disabled={isSaving}
+                >
+                  <Save size={16} /> {isSaving ? 'Saving...' : 'Save Changes'}
+                </button>
+                <button 
+                  className="btn-secondary sync-btn"
+                  onClick={() => setShowCode(!showCode)}
+                >
+                  <CodeIcon size={16} /> {showCode ? 'Close Source' : 'Generate Source'}
+                </button>
+              </div>
             </div>
+
+            {saveStatus.message && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`status-message ${saveStatus.type} glass`}
+              >
+                {saveStatus.message}
+              </motion.div>
+            )}
+
 
             {showCode && (
               <motion.div 
