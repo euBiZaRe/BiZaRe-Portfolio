@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist --repo https://github.com/euBiZaRe/BiZaRe-Portfolio.git"
   },
   "dependencies": {
     "firebase": "^11.10.0",
