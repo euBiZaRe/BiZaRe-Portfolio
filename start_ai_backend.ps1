@@ -33,4 +33,9 @@ Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # Start the server
+Write-Host "Starting python API..."
 python -m llama_cpp.server --model "$modelPath" --host 0.0.0.0 --port 8080 --chat_format chatml
+
+Write-Host ""
+Write-Host "Server process ended or crashed." -ForegroundColor Red
+Read-Host -Prompt "Press Enter to exit"
