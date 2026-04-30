@@ -57,6 +57,7 @@ const AIChat = () => {
       const baseUrl = apiUrl.replace(/\/+$/, '');
       const response = await fetch(`${baseUrl}/v1/chat/completions`, {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
           'ngrok-skip-browser-warning': 'true',
@@ -71,16 +72,17 @@ const AIChat = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error?.message || 'Failed to connect to the backend server.');
+        const errorText = await response.text().catch(() => '');
+        console.error("Server Response Error:", errorText);
+        throw new Error('Failed to connect to the backend server.');
       }
 
       const data = await response.json();
       const aiResponse = data.choices[0].message;
       setMessages([...newMessages, aiResponse]);
     } catch (err) {
-      console.error(err);
-      setError("Failed to connect to the backend server. The model might be offline or the Ngrok URL is outdated.");
+      console.error("Detailed Fetch Error:", err);
+      setError("Connection failed. If you are on mobile, please ensure you have bypassed any tunnel warnings first.");
     } finally {
       setIsLoading(false);
     }
