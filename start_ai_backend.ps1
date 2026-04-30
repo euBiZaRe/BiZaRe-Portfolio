@@ -14,7 +14,7 @@ if (-not $llamaInstalled) {
     }
 }
 
-$modelPath = "F:\Ai\Aerobyte.gguf"
+$modelPath = "F:\Ai\AeroBytev1.gguf"
 
 if (-not (Test-Path $modelPath)) {
     Write-Host "Error: Model file not found at $modelPath" -ForegroundColor Red
