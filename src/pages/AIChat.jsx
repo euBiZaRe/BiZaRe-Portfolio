@@ -13,7 +13,7 @@ const AIChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [apiUrl, setApiUrl] = useState('');
   const [error, setError] = useState('');
-  const messagesEndRef = useRef(null);
+  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     const fetchApiUrl = async () => {
@@ -22,7 +22,7 @@ const AIChat = () => {
         if (urlSnap.exists() && urlSnap.data().baseUrl) {
           setApiUrl(urlSnap.data().baseUrl);
         } else {
-          setApiUrl('http://localhost:8080'); // Fallback for local testing
+          setApiUrl('http://localhost:8080');
         }
       } catch (err) {
         console.error("Failed to fetch API URL:", err);
@@ -33,7 +33,9 @@ const AIChat = () => {
   }, []);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -113,7 +115,11 @@ const AIChat = () => {
           </div>
 
           {/* Chat Messages */}
-          <div className="chat-messages" style={{ flex: 1, padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div 
+            ref={chatContainerRef}
+            className="chat-messages" 
+            style={{ flex: 1, padding: '20px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '20px' }}
+          >
             {messages.map((msg, idx) => (
               <div key={idx} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                 <div style={{ 
@@ -152,7 +158,6 @@ const AIChat = () => {
                 </div>
               </div>
             )}
-            <div ref={messagesEndRef} />
           </div>
 
           {/* Chat Input */}
