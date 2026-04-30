@@ -161,5 +161,13 @@ export const inProgressProjects = [
     progress: 40,
     description: "A powerful internal cheat for Counter-Strike 2 with a seamless in-game interface. Includes RCS, Skin Changer, and advanced visibility-checked visuals.",
     tags: ["C++", "Internal", "MSVC", "Game Hooking"],
+  },
+  {
+    id: 'ip5',
+    title: "Customised AI model (Based off of Gemini 3.1 Pro (H))",
+    status: "Expanding dataset coverage / edge cases",
+    progress: 75,
+    description: "A semi-custom AI model powered by Gemini 3.1 Pro, refined through targeted fine-tuning to deliver higher accuracy and more consistent, use-case-driven results.",
+    tags: ["PyTorch", "TensorFlow", "Gemini 3.1 Pro"],
   }
 ];
