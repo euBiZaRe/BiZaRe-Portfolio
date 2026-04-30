@@ -52,7 +52,8 @@ const AIChat = () => {
     setError('');
 
     try {
-      const response = await fetch(`${apiUrl}/v1/chat/completions`, {
+      const baseUrl = apiUrl.replace(/\/+$/, '');
+      const response = await fetch(`${baseUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
