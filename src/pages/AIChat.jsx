@@ -57,20 +57,20 @@ const AIChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Bypass browser warnings for Ngrok and Localtunnel
           'ngrok-skip-browser-warning': 'true',
           'Bypass-Tunnel-Reminder': 'true'
         },
         body: JSON.stringify({
+          model: "koboldcpp",
           messages: newMessages,
-          temperature: 0.7,
-          max_tokens: 1000,
-          stream: false
-        })
+          stream: false,
+          max_tokens: 1000
+        }),
       });
 
       if (!response.ok) {
-        throw new Error(`Server responded with status ${response.status}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error?.message || 'Failed to connect to the backend server.');
       }
 
       const data = await response.json();
