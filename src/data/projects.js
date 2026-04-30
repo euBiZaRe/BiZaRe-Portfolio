@@ -92,6 +92,40 @@ export const projects = [
     link: "https://www.aerobyte.shop/rl-bot-trainer.html",
     repo: "#",
     image: `${base}images/rl_bot.png`
+  },
+  {
+    id: 6,
+    title: "GRiD UP Performance Center",
+    description: "A comprehensive high-performance race engineering and strategy application built for endurance racing. Features live telemetry processing, dynamic race control, and strategic planning tools.",
+    longDescription: "GRiD UP Performance Center is a specialized desktop application designed for sim racing teams to manage race strategy, monitor live telemetry, and execute complex race control operations. Built using modern web technologies and a Python-based telemetry bridge, it acts as a centralized command center. It offers real-time track map tracking, global fuel tracking with persistent history, a dynamic relatives interval view, and a detailed data hub for granular sector analysis.",
+    features: [
+      "Cross-platform desktop application built with Electron and React",
+      "Real-time telemetry processing via a Python-based bridge",
+      "Enhanced Race Control with live field incident monitoring",
+      "Global Fuel Tracking with persistent consumption history",
+      "Dynamic Relatives view showing live intervals ahead and behind",
+      "Interactive track map with vibrant driver highlighting",
+      "Multi-tabbed Data Hub featuring detailed sector analysis"
+    ],
+    type: "Application",
+    tags: ["Electron", "React", "JavaScript", "Python", "TailwindCSS", "Sim Racing"],
+    link: "https://github.com/euBiZaRe/GRiD-UP-Center/releases",
+    repo: "https://github.com/euBiZaRe/GRiD-UP-Center",
+    image: `${base}images/grid_up_center/2.Race Monitor.png`,
+    screenshots: [
+      `${base}images/grid_up_center/Showcase.png`,
+      `${base}images/grid_up_center/1.Team Select.png`,
+      `${base}images/grid_up_center/2.Race Monitor.png`,
+      `${base}images/grid_up_center/3. Data Hub.png`,
+      `${base}images/grid_up_center/4.Team Lobby.png`,
+      `${base}images/grid_up_center/5.Fuel Strategy.png`,
+      `${base}images/grid_up_center/6.Stint Manager.png`,
+      `${base}images/grid_up_center/7.Car Health.png`,
+      `${base}images/grid_up_center/8.Race Control.png`,
+      `${base}images/grid_up_center/9.Setup Centre.png`,
+      `${base}images/grid_up_center/10.Setup Centre With Setup.png`,
+      `${base}images/grid_up_center/11.Settings.png`
+    ]
   }
 ];
 

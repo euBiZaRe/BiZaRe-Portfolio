@@ -73,6 +73,25 @@ const ProjectDetails = () => {
           <img src={project.image} alt={project.title} className="details-hero-image" style={{ width: '100%', height: 'auto', display: 'block' }} />
         </motion.div>
 
+        {project.screenshots && project.screenshots.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="project-details-screenshots"
+            style={{ paddingBottom: '80px' }}
+          >
+            <h2 style={{ fontSize: '2rem', marginBottom: '40px' }}>App <span className="text-gradient">Gallery</span></h2>
+            <div className="screenshots-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '20px' }}>
+              {project.screenshots.map((screenshot, index) => (
+                <div key={index} style={{ borderRadius: '15px', overflow: 'hidden', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
+                  <img src={screenshot} alt={`${project.title} screenshot ${index + 1}`} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
