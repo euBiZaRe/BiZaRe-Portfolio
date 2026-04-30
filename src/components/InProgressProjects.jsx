@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Clock, Hammer, Rocket } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { inProgressProjects as fallbackProjects } from '../data/projects';
 import { db } from '../firebase';
 import { doc, onSnapshot } from 'firebase/firestore';
@@ -41,6 +42,12 @@ const InProgressCard = ({ project }) => {
             <span key={tag} className="tag">{tag}</span>
           ))}
         </div>
+        
+        {project.id === 'ip5' && (
+          <Link to="/ai-demo" className="btn btn-primary" style={{ marginTop: '20px', display: 'inline-flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+            <Rocket size={18} /> Test Model Live
+          </Link>
+        )}
       </div>
     </motion.div>
   );

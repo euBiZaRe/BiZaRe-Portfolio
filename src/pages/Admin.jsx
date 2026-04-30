@@ -16,6 +16,9 @@ const Admin = () => {
   const [showCode, setShowCode] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [saveStatus, setSaveStatus] = useState({ type: '', message: '' });
+  const [ngrokUrl, setNgrokUrl] = useState('');
+  const [isSavingUrl, setIsSavingUrl] = useState(false);
+  const [urlStatus, setUrlStatus] = useState({ type: '', message: '' });
   const isDev = import.meta.env.DEV;
 
   useEffect(() => {
@@ -30,7 +33,18 @@ const Admin = () => {
         console.error("Error fetching projects:", err);
       }
     };
+    const fetchUrl = async () => {
+      try {
+        const urlSnap = await getDoc(doc(db, 'api_config', 'url'));
+        if (urlSnap.exists()) {
+          setNgrokUrl(urlSnap.data().baseUrl || '');
+        }
+      } catch (err) {
+        console.error("Error fetching URL:", err);
+      }
+    };
     fetchProjects();
+    fetchUrl();
   }, []);
 
 
@@ -99,6 +113,21 @@ const Admin = () => {
       setSaveStatus({ type: 'error', message: 'Firebase Error: ' + err.message });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleSaveUrl = async () => {
+    setIsSavingUrl(true);
+    setUrlStatus({ type: '', message: '' });
+    try {
+      await setDoc(doc(db, 'api_config', 'url'), { baseUrl: ngrokUrl.trim() });
+      setUrlStatus({ type: 'success', message: 'API URL saved to live site!' });
+      setTimeout(() => setUrlStatus({ type: '', message: '' }), 3000);
+    } catch (err) {
+      console.error("URL Save Error:", err);
+      setUrlStatus({ type: 'error', message: 'Firebase Error: ' + err.message });
+    } finally {
+      setIsSavingUrl(false);
     }
   };
 
@@ -197,6 +226,40 @@ const Admin = () => {
             </form>
           </motion.div>
 
+          {/* AI Backend API Configuration */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="admin-card glass"
+          >
+            <h3>Live AI Backend API</h3>
+            <p className="code-tip" style={{ marginBottom: '15px' }}>Paste your active Ngrok URL here to connect the live site to your local Gemma model.</p>
+            <div className="form-group" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <input 
+                type="text" 
+                placeholder="https://xxx.ngrok-free.app" 
+                value={ngrokUrl} 
+                onChange={e => setNgrokUrl(e.target.value)}
+                style={{ flex: 1, margin: 0 }}
+              />
+              <button 
+                onClick={handleSaveUrl} 
+                disabled={isSavingUrl} 
+                className="btn btn-primary" 
+                style={{ height: '42px', padding: '0 20px', margin: 0 }}
+              >
+                {isSavingUrl ? 'Saving...' : 'Set URL'}
+              </button>
+            </div>
+            {urlStatus.message && (
+              <p className={`status-text ${urlStatus.type === 'error' ? 'error-text' : 'text-gradient'}`} style={{ marginTop: '10px', fontSize: '0.9rem' }}>
+                {urlStatus.message}
+              </p>
+            )}
+          </motion.div>
+        </div>
+
+        <div className="admin-grid" style={{ marginTop: '30px' }}>
           {/* Manage Current Projects */}
           <div className="manage-projects">
             <div className="manage-header">

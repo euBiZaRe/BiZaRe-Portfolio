@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import ProjectDetails from './pages/ProjectDetails';
 import Admin from './pages/Admin';
+import AIChat from './pages/AIChat';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/project/:id" element={<ProjectDetails />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path="/ai-demo" element={<AIChat />} />
         </Routes>
         <Footer />
       </div>
