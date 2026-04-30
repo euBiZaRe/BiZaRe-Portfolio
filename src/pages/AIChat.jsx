@@ -56,8 +56,9 @@ const AIChat = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          // Ngrok requires a special header sometimes to bypass browser warning
-          'ngrok-skip-browser-warning': 'true'
+          // Bypass browser warnings for Ngrok and Localtunnel
+          'ngrok-skip-browser-warning': 'true',
+          'Bypass-Tunnel-Reminder': 'true'
         },
         body: JSON.stringify({
           messages: newMessages,
