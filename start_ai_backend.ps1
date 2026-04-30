@@ -1,5 +1,5 @@
 Write-Host "=========================================" -ForegroundColor Cyan
-Write-Host "  Starting Local AI Backend (Gemma 4)    " -ForegroundColor Cyan
+Write-Host "  Starting Local AI Backend (AeroByte AI)  " -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -14,7 +14,7 @@ if (-not $llamaInstalled) {
     }
 }
 
-$modelPath = "F:\Ai\gemma 4.gguf"
+$modelPath = "F:\Ai\Aerobyte.gguf"
 
 if (-not (Test-Path $modelPath)) {
     Write-Host "Error: Model file not found at $modelPath" -ForegroundColor Red

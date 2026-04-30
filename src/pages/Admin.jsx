@@ -233,7 +233,7 @@ const Admin = () => {
             className="admin-card glass"
           >
             <h3>Live AI Backend API</h3>
-            <p className="code-tip" style={{ marginBottom: '15px' }}>Paste your active Ngrok URL here to connect the live site to your local Gemma model.</p>
+            <p className="code-tip" style={{ marginBottom: '15px' }}>Paste your active Ngrok/Pinggy URL here to connect the live site to your local AeroByte AI model.</p>
             <div className="form-group" style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
               <input 
                 type="text" 

@@ -7,7 +7,7 @@ import { doc, getDoc } from 'firebase/firestore';
 
 const AIChat = () => {
   const [messages, setMessages] = useState([
-    { role: 'assistant', content: 'Hello! I am a custom Gemma 3 model running locally on a private server. How can I help you today?' }
+    { role: 'assistant', content: 'Hello! I am the AeroByte AI model running locally on a private server. How can I help you today?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +92,7 @@ const AIChat = () => {
         </Link>
 
         <div className="chat-header" style={{ marginBottom: '30px', textAlign: 'center' }}>
-          <h1 className="section-title" style={{ margin: 0 }}>Gemma 3 <span className="text-gradient">Live Demo</span></h1>
+          <h1 className="section-title" style={{ margin: 0 }}>AeroByte AI <span className="text-gradient">Live Demo</span></h1>
           <p className="section-subtitle-text" style={{ marginTop: '10px' }}>Powered by a customized GGUF model running on a private GPU/CPU backend.</p>
         </div>
 
@@ -140,7 +140,7 @@ const AIChat = () => {
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
                 <div style={{ padding: '15px 20px', borderRadius: '20px', background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <Bot size={20} color="var(--primary)" />
-                  <span className="loading-dots">Gemma is thinking...</span>
+                  <span className="loading-dots">AeroByte is thinking...</span>
                 </div>
               </div>
             )}
@@ -161,7 +161,7 @@ const AIChat = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Message Gemma..."
+              placeholder="Message AeroByte..."
               disabled={isLoading || !apiUrl}
               style={{ flex: 1, padding: '15px 20px', borderRadius: '15px', border: 'none', background: 'rgba(255,255,255,0.05)', color: 'white', fontSize: '1rem', outline: 'none' }}
             />
