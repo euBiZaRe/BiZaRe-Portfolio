@@ -89,8 +89,14 @@ const AIChat = () => {
   };
 
   return (
-    <div className="ai-chat-page" style={{ minHeight: '100vh', paddingTop: '100px', paddingBottom: '50px' }}>
-      <div className="container" style={{ maxWidth: '900px' }}>
+    <div className="ai-chat-page" style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: '40px 20px'
+    }}>
+      <div className="container" style={{ maxWidth: '900px', width: '100%' }}>
         <Link to="/" className="back-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', marginBottom: '30px' }}>
           <ArrowLeft size={20} /> Back to Home
         </Link>
@@ -111,7 +117,7 @@ const AIChat = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Activity size={16} color={apiUrl ? '#4ade80' : '#fbbf24'} />
               <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                {apiUrl ? `Backend Connected: ${apiUrl}` : 'Initializing Connection...'}
+                {apiUrl ? 'Backend Connected' : 'Initializing Connection...'}
               </span>
             </div>
           </div>
