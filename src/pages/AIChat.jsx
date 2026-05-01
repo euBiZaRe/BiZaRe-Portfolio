@@ -81,7 +81,6 @@ const AIChat = () => {
       const aiResponse = data.choices[0].message;
       setMessages([...newMessages, aiResponse]);
     } catch (err) {
-      console.error("Detailed Fetch Error:", err);
       setError("Connection failed. If you are on mobile, please ensure you have bypassed any tunnel warnings first.");
     } finally {
       setIsLoading(false);
@@ -90,14 +89,29 @@ const AIChat = () => {
 
   return (
     <div className="ai-chat-page" style={{ 
-      minHeight: '100vh', 
+      height: '100vh', 
+      width: '100vw',
       display: 'flex', 
-      flexDirection: 'column',
+      alignItems: 'center',
       justifyContent: 'center',
-      padding: '40px 20px'
+      background: 'var(--bg-dark)',
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      zIndex: 9999
     }}>
-      <div className="container" style={{ maxWidth: '900px', width: '100%' }}>
-        <Link to="/" className="back-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: 'var(--text-secondary)', textDecoration: 'none', marginBottom: '30px' }}>
+      <div className="container" style={{ maxWidth: '900px', width: '100%', padding: '20px' }}>
+        <Link to="/" className="back-link" style={{ 
+          position: 'absolute',
+          top: '40px',
+          left: '40px',
+          display: 'inline-flex', 
+          alignItems: 'center', 
+          gap: '8px', 
+          color: 'var(--text-secondary)', 
+          textDecoration: 'none',
+          zIndex: 10
+        }}>
           <ArrowLeft size={20} /> Back to Home
         </Link>
 
@@ -110,7 +124,7 @@ const AIChat = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="chat-container glass"
-          style={{ display: 'flex', flexDirection: 'column', height: '600px', borderRadius: '20px', overflow: 'hidden' }}
+          style={{ display: 'flex', flexDirection: 'column', height: '650px', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}
         >
           {/* Chat connection status */}
           <div className="chat-status" style={{ padding: '15px 20px', background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
