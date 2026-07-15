@@ -1481,3 +1481,33 @@ input:checked + .toggle-slider:before {
     grid-template-columns: 1fr !important;
   }
 }
+
+/* Pricing Configurator Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+  gap: 8px;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.btn-outline-glow {
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-main) !important;
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
+}
+
+.btn-outline-glow:hover {
+  background: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.4);
+  border-color: var(--primary-hover);
+  transform: translateY(-2px);
+  color: white !important;
+}
