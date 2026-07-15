@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-d
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
+import ServicesPage from './pages/ServicesPage';
 import ProjectDetails from './pages/ProjectDetails';
 import Admin from './pages/Admin';
 import AIChat from './pages/AIChat';
@@ -111,10 +112,11 @@ function AppContent() {
       )}
       
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route 
-          path="/" 
+          path="/services" 
           element={
-            <Home 
+            <ServicesPage 
               billingModel={billingModel}
               onBillingModelChange={handleBillingModelChange}
               currency={currency}

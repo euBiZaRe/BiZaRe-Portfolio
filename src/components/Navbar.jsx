@@ -17,12 +17,11 @@ const Navbar = ({ cartCount, onCartOpen, currency, onCurrencyChange }) => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Services', href: '#services' },
-    { name: 'Planner', href: '#configurator' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '#home', isRoute: false },
+    { name: 'Projects', href: '#projects', isRoute: false },
+    { name: 'Services', href: '/services', isRoute: true },
+    { name: 'About', href: '#about', isRoute: false },
+    { name: 'Contact', href: '#contact', isRoute: false },
   ];
 
   const handleNavClick = (e, href) => {
@@ -55,7 +54,20 @@ const Navbar = ({ cartCount, onCartOpen, currency, onCurrencyChange }) => {
         <ul className="nav-links desktop">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
+              {link.isRoute ? (
+                <Link 
+                  to={link.href} 
+                  onClick={() => setIsOpen(false)}
+                  style={{
+                    color: location.pathname === link.href ? 'var(--primary)' : 'var(--text-muted)',
+                    fontWeight: 500
+                  }}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
+              )}
             </li>
           ))}
         </ul>
@@ -120,7 +132,21 @@ const Navbar = ({ cartCount, onCartOpen, currency, onCurrencyChange }) => {
         <ul>
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
+              {link.isRoute ? (
+                <Link 
+                  to={link.href} 
+                  onClick={() => setIsOpen(false)}
+                  style={{
+                    color: location.pathname === link.href ? 'var(--primary)' : 'var(--text-muted)',
+                    fontWeight: 500,
+                    fontSize: '1.1rem'
+                  }}
+                >
+                  {link.name}
+                </Link>
+              ) : (
+                <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>{link.name}</a>
+              )}
             </li>
           ))}
         </ul>
