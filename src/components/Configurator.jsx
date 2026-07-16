@@ -5,16 +5,16 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
   
   // Available base packages (Fixed-Price)
   const projectPackages = [
-    { id: 'landing-page', name: 'Conversion Landing Page', basePrice: 250, minPages: 1, maxPages: 3 },
-    { id: 'business-platform', name: 'Growth Web Platform', basePrice: 750, minPages: 3, maxPages: 10 },
-    { id: 'custom-application', name: 'Custom SaaS Engine', basePrice: 2500, minPages: 5, maxPages: 25 }
+    { id: 'landing-page', name: 'Launch Landing Page', basePrice: 199, minPages: 1, maxPages: 2 },
+    { id: 'business-platform', name: 'Business Website', basePrice: 599, minPages: 3, maxPages: 8 },
+    { id: 'custom-application', name: 'Custom Web App / Startup MVP', basePrice: 1200, minPages: 5, maxPages: 20 }
   ];
 
   // Available base packages (Subscriptions)
   const subscriptionPackages = [
-    { id: 'starter-retainer', name: 'Starter Retainer', basePrice: 149 },
-    { id: 'dev-on-demand', name: 'Developer-on-Demand', basePrice: 799 },
-    { id: 'engineering-team', name: 'Engineering Team', basePrice: 1499 }
+    { id: 'starter-retainer', name: 'Essentials', basePrice: 79 },
+    { id: 'dev-on-demand', name: 'Growth', basePrice: 249 },
+    { id: 'engineering-team', name: 'Scale', basePrice: 499 }
   ];
 
   // Configurator states

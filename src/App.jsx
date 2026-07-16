@@ -29,23 +29,23 @@ const formatPrice = (usdAmount, currCode = 'USD') => {
 // Default scopes
 const DEFAULT_PROJECT_SCOPE = {
   packageId: 'business-platform',
-  packageName: 'Growth Web Platform',
+  packageName: 'Business Website',
   billingModel: 'project',
   pages: 5,
   timeline: 'standard',
   features: ['seo'],
   featuresText: ['Advanced SEO & Schema'],
-  price: 950
+  price: 799
 };
 
 const DEFAULT_SUBSCRIPTION_SCOPE = {
   packageId: 'dev-on-demand',
-  packageName: 'Developer-on-Demand',
+  packageName: 'Growth',
   billingModel: 'subscription',
   sla: 'standard',
   features: ['seo-retainer'],
   featuresText: ['SEO & Search Retainer'],
-  price: 899
+  price: 349
 };
 
 function AppContent() {

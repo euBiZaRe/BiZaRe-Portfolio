@@ -6,56 +6,57 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
   const projectPackages = [
     {
       id: 'landing-page',
-      name: 'Conversion Landing Page',
+      name: 'Launch Landing Page',
       icon: <Sparkles size={24} color="var(--secondary)" />,
-      tagline: 'Ideal for product launches, marketing, & validation.',
-      basePrice: 250,
+      tagline: 'Perfect for: Creators, Local businesses, Product launches, Events',
+      basePrice: 199,
       description: 'A single, high-converting, lightning-fast landing page designed to turn visitors into leads.',
       features: [
-        'Custom High-Fidelity UI/UX',
-        '100% Mobile & Responsive Design',
-        'Contact Form & Mailer Integrations',
-        'High-Speed Edge CDN Deployment',
-        'Core Technical SEO Audit',
-        '3 Rounds of Design Revisions',
-        'Vite + React Setup (Production Ready)'
+        'Custom responsive design',
+        'Contact form',
+        'Basic SEO',
+        'Analytics setup',
+        'Performance optimisation',
+        '2 revisions'
       ],
       color: 'var(--secondary)'
     },
     {
       id: 'business-platform',
-      name: 'Growth Web Platform',
+      name: 'Business Website',
       icon: <Building size={24} color="var(--primary)" />,
-      tagline: 'Best for services, local businesses, & blogs.',
-      basePrice: 750,
-      description: 'A multi-page corporate website with modular structure and Content Management System integration.',
+      tagline: 'Perfect for: Trades, Restaurants, Salons, Agencies, Small businesses',
+      basePrice: 599,
+      description: 'A professional multi-page website integrated with a Content Management System (CMS) and blog.',
       features: [
-        'Up to 5 Custom Pages / Views',
-        'Headless Content Management System',
-        'Professional Blog / News Hub',
-        'Advanced Technical SEO & Schema',
-        'Google Analytics & Marketing Pixels',
-        'Smooth CSS Interactive Animations',
-        '1 Month Post-Launch Support & Auditing'
+        'Up to 6 pages',
+        'CMS integration',
+        'Blog',
+        'Contact forms',
+        'SEO optimisation',
+        'Google Analytics',
+        'Performance optimisation',
+        '1 month support',
+        '3 revisions'
       ],
       color: 'var(--primary)',
       popular: true
     },
     {
       id: 'custom-application',
-      name: 'Custom SaaS Engine',
+      name: 'Custom Web App / Startup MVP',
       icon: <Layers size={24} color="var(--accent)" />,
-      tagline: 'Perfect for startups, SaaS, & complex tools.',
-      basePrice: 2500,
-      description: 'A full-stack, database-driven digital application customized entirely to your workflow.',
+      tagline: 'Perfect for: Startup ideas, Booking systems, Dashboards, Membership platforms, Internal business tools',
+      basePrice: 1200,
+      description: 'A full-stack, database-driven digital application or software prototype customized for your workflow.',
       features: [
-        'Custom Dashboard & App Architecture',
-        'Database Modeling & Secure Storage',
-        'User Authentication (Login, Socials, Roles)',
-        'Third-Party Integrations (Stripe, APIs)',
-        'Serverless Backend Functions',
-        'Real-time Data Fetching & Sync',
-        '3 Months Priority Support & Documentation'
+        'Authentication',
+        'Database',
+        'Admin dashboard',
+        'Payment integration',
+        'API integrations',
+        'Documentation',
+        '2 months support'
       ],
       color: 'var(--accent)'
     }
@@ -64,56 +65,56 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
   const subscriptionPackages = [
     {
       id: 'starter-retainer',
-      name: 'Starter Retainer',
+      name: 'Essentials',
       icon: <Shield size={24} color="var(--secondary)" />,
-      tagline: 'Best for simple updates & site security.',
-      basePrice: 149,
-      description: 'Ongoing technical upkeep, cloud backups, and security patching for existing websites.',
+      tagline: 'Keep your website secure and updated.',
+      basePrice: 79,
+      description: 'Ongoing technical upkeep, backups, and security patching for your website.',
       features: [
-        'Monthly CMS & Plugin Upgrades',
-        'Automated Secure DB Backups',
-        'Web Security Auditing & Firewalling',
-        'Core Web Vitals Performance Auditing',
-        'Up to 4 Hours Support/Styling Tasks',
-        'Email Support (24hr Response)',
-        'Cancel Anytime'
+        'Security updates',
+        'Website maintenance',
+        'Weekly backups',
+        'CMS updates',
+        'Up to 2 support hours',
+        'Email support'
       ],
       color: 'var(--secondary)'
     },
     {
       id: 'dev-on-demand',
-      name: 'Developer-on-Demand',
+      name: 'Growth',
       icon: <UserCheck size={24} color="var(--primary)" />,
-      tagline: 'Best for active startups needing continuous dev.',
-      basePrice: 799,
-      description: 'Your dedicated senior frontend engineer. Add unlimited tasks and build out feature by feature.',
+      tagline: 'Perfect for businesses wanting regular improvements.',
+      basePrice: 249,
+      description: 'Your dedicated senior engineer for continuous updates, optimizations, and small features.',
       features: [
-        '1 Active Development Task at a Time',
-        'Unlimited Tasks Backlog/Queue',
-        'Average 48-Hour Task Delivery',
-        'Direct Slack Channel Communication',
-        'Vite, React, Node.js Expert Access',
-        'Comprehensive Code Reviews & Handoffs',
-        'Pause or Cancel Anytime'
+        'Unlimited requests',
+        '1 active task at a time',
+        'Up to 8 development hours',
+        'Bug fixes',
+        'Small feature additions',
+        'Monthly performance report',
+        'Priority support'
       ],
       color: 'var(--primary)',
       popular: true
     },
     {
       id: 'engineering-team',
-      name: 'Engineering Team',
+      name: 'Scale',
       icon: <Zap size={24} color="var(--accent)" />,
-      tagline: 'Perfect for fast-scaling startups and apps.',
-      basePrice: 1499,
-      description: 'Double the output. Two senior engineers working parallel in your codebase for rapid shipping.',
+      tagline: 'Perfect for startups and growing businesses.',
+      basePrice: 499,
+      description: 'Double active task throughput and priority direct communication for scaling teams.',
       features: [
-        '2 Active Development Tasks at a Time',
-        'Unlimited Tasks Backlog/Queue',
-        'Dedicated Project Lead Oversight',
-        'Dedicated Shared Slack Channel',
-        'Full Stack Architecture Consulting',
-        'Premium QA & Unit Testing Audits',
-        'Pause or Cancel Anytime'
+        'Unlimited requests',
+        '2 active tasks',
+        'Up to 16 development hours',
+        'New feature development',
+        'Architecture advice',
+        'Monthly planning call',
+        'Slack/Discord communication',
+        'Priority support'
       ],
       color: 'var(--accent)'
     }
@@ -294,6 +295,19 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
             </div>
           ))}
         </div>
+
+        {billingModel === 'project' && (
+          <div style={{ 
+            textAlign: 'center', 
+            color: 'var(--text-muted)', 
+            fontSize: '0.95rem', 
+            marginTop: '36px',
+            fontStyle: 'italic',
+            opacity: 0.8
+          }}>
+            * Anything larger is quoted separately.
+          </div>
+        )}
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
