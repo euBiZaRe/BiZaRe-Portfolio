@@ -35,17 +35,17 @@ const DEFAULT_PROJECT_SCOPE = {
   timeline: 'standard',
   features: ['seo'],
   featuresText: ['Advanced SEO & Schema'],
-  price: 799
+  price: 599
 };
 
 const DEFAULT_SUBSCRIPTION_SCOPE = {
   packageId: 'dev-on-demand',
-  packageName: 'Growth',
+  packageName: 'Growth Plan',
   billingModel: 'subscription',
   sla: 'standard',
   features: ['seo-retainer'],
   featuresText: ['SEO & Search Retainer'],
-  price: 349
+  price: 259
 };
 
 function AppContent() {

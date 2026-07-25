@@ -8,9 +8,9 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
       id: 'landing-page',
       name: 'Launch Landing Page',
       icon: <Sparkles size={24} color="var(--secondary)" />,
-      tagline: 'Perfect for: Creators, Local businesses, Product launches, Events',
-      basePrice: 199,
-      description: 'A single, high-converting, lightning-fast landing page designed to turn visitors into leads.',
+      tagline: 'Perfect for: Creators, local businesses, product launches, events',
+      basePrice: 129,
+      description: 'A single, high-converting landing page built to turn visitors into leads.',
       features: [
         'Custom responsive design',
         'Contact form',
@@ -25,13 +25,12 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
       id: 'business-platform',
       name: 'Business Website',
       icon: <Building size={24} color="var(--primary)" />,
-      tagline: 'Perfect for: Trades, Restaurants, Salons, Agencies, Small businesses',
-      basePrice: 599,
-      description: 'A professional multi-page website integrated with a Content Management System (CMS) and blog.',
+      tagline: 'Perfect for: Trades, restaurants, salons, agencies, small businesses',
+      basePrice: 399,
+      description: 'A professional multi-page website with a content management system.',
       features: [
-        'Up to 6 pages',
+        'Up to 5 pages',
         'CMS integration',
-        'Blog',
         'Contact forms',
         'SEO optimisation',
         'Google Analytics',
@@ -46,17 +45,16 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
       id: 'custom-application',
       name: 'Custom Web App / Startup MVP',
       icon: <Layers size={24} color="var(--accent)" />,
-      tagline: 'Perfect for: Startup ideas, Booking systems, Dashboards, Membership platforms, Internal business tools',
-      basePrice: 1200,
-      description: 'A full-stack, database-driven digital application or software prototype customized for your workflow.',
+      tagline: 'Perfect for: Startup ideas, booking systems, dashboards, membership platforms',
+      basePrice: 799,
+      description: "A full-stack, database-driven application tailored to your workflow — the same class of build behind GRiD UP's live telemetry and member systems.",
       features: [
         'Authentication',
         'Database',
         'Admin dashboard',
-        'Payment integration',
         'API integrations',
         'Documentation',
-        '2 months support'
+        '1 month support'
       ],
       color: 'var(--accent)'
     }
@@ -65,10 +63,10 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
   const subscriptionPackages = [
     {
       id: 'starter-retainer',
-      name: 'Essentials',
+      name: 'Care Plan',
       icon: <Shield size={24} color="var(--secondary)" />,
-      tagline: 'Keep your website secure and updated.',
-      basePrice: 79,
+      tagline: 'Keep your website secure and running smoothly.',
+      basePrice: 39,
       description: 'Ongoing technical upkeep, backups, and security patching for your website.',
       features: [
         'Security updates',
@@ -82,41 +80,21 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
     },
     {
       id: 'dev-on-demand',
-      name: 'Growth',
+      name: 'Growth Plan',
       icon: <UserCheck size={24} color="var(--primary)" />,
-      tagline: 'Perfect for businesses wanting regular improvements.',
-      basePrice: 249,
+      tagline: 'For businesses wanting regular improvements, without the big agency price tag.',
+      basePrice: 159,
       description: 'Your dedicated senior engineer for continuous updates, optimizations, and small features.',
       features: [
-        'Unlimited requests',
         '1 active task at a time',
-        'Up to 8 development hours',
+        'Up to 5 development hours',
         'Bug fixes',
         'Small feature additions',
-        'Monthly performance report',
-        'Priority support'
+        'Monthly check-in',
+        'Priority email/Discord support'
       ],
       color: 'var(--primary)',
       popular: true
-    },
-    {
-      id: 'engineering-team',
-      name: 'Scale',
-      icon: <Zap size={24} color="var(--accent)" />,
-      tagline: 'Perfect for startups and growing businesses.',
-      basePrice: 499,
-      description: 'Double active task throughput and priority direct communication for scaling teams.',
-      features: [
-        'Unlimited requests',
-        '2 active tasks',
-        'Up to 16 development hours',
-        'New feature development',
-        'Architecture advice',
-        'Monthly planning call',
-        'Slack/Discord communication',
-        'Priority support'
-      ],
-      color: 'var(--accent)'
     }
   ];
 
@@ -296,18 +274,23 @@ export default function Services({ onSelectPackage, billingModel, onBillingModel
           ))}
         </div>
 
-        {billingModel === 'project' && (
-          <div style={{ 
-            textAlign: 'center', 
-            color: 'var(--text-muted)', 
-            fontSize: '0.95rem', 
-            marginTop: '36px',
-            fontStyle: 'italic',
-            opacity: 0.8
-          }}>
-            * Anything larger is quoted separately.
-          </div>
-        )}
+        <div style={{ 
+          textAlign: 'center', 
+          color: 'var(--text-muted)', 
+          fontSize: '0.85rem', 
+          lineHeight: '1.6',
+          maxWidth: '720px',
+          margin: '48px auto 0',
+          padding: '16px 20px',
+          background: 'rgba(255, 255, 255, 0.01)',
+          border: '1px solid rgba(255, 255, 255, 0.04)',
+          borderRadius: '8px',
+          opacity: 0.9
+        }}>
+          <p style={{ margin: 0 }}>
+            <strong>Fine Print:</strong> Prices represent starting estimates for standard scope. Final pricing is confirmed during a free consultation based on your specific requirements. All plans include clear milestones and revision rounds — no surprise charges.
+          </p>
+        </div>
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `

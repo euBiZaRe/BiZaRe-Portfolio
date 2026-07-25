@@ -22,18 +22,13 @@ const About = () => {
           >
             <h2 className="section-title">About <span className="text-gradient">Me</span></h2>
             <p className="about-description">
-              I am a passionate developer with a knack for creating elegant solutions 
-              to complex problems. With over 5 years of experience in the industry, 
-              I've worked on everything from simple landing pages to complex 
-              enterprise-level applications.
+              I'm Matty — a developer who got my start building tools inside tight-knit online communities, from mods and utilities for the Among Us modding scene to full platforms for competitive teams.
             </p>
             <p className="about-description">
-              My approach combines technical excellence with a deep understanding 
-              of user needs, ensuring that every project I touch is not only 
-              functional but also delightful to use.
+              My most recent build, GRiD UP Sim Racing, is a full community platform for a competitive sim racing team — live telemetry dashboards, real-time event countdowns, member accounts, and an integrated shop, all built from the ground up. It's the same kind of work I now offer to businesses: sites that don't just look good, but actually do things — track data, manage members, handle bookings, sell products.
             </p>
-            <p className="about-description font-bold text-gradient mt-6" style={{ fontSize: '1.2rem', fontWeight: '700' }}>
-              No project is too big or too small. Each is built with precision.
+            <p className="about-description font-bold text-gradient mt-6" style={{ fontSize: '1.15rem', fontWeight: '700' }}>
+              I'm currently taking on a limited number of new clients at founding-client rates while I grow my portfolio. If you work with me now, you lock in these prices for future projects even as my rates rise.
             </p>
           </motion.div>
 
