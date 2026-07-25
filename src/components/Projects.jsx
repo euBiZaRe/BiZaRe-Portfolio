@@ -134,37 +134,98 @@ const FeaturedProjectShowcase = () => {
           </div>
         </div>
 
-        {/* Right Side: Placeholders Grid */}
+        {/* Right Side: Showcase Screenshots / Placeholders */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {[
-            { label: "Telemetry Dashboard Screenshot", desc: "Live telemetry streams mapping" },
-            { label: "Events Page Screenshot", desc: "Countdown timers and dynamic overlays" },
-            { label: "Roster Page Screenshot", desc: "Member application status grid" }
-          ].map((ph, idx) => (
-            <div 
-              key={idx} 
-              style={{
-                border: '1px dashed rgba(255, 255, 255, 0.15)',
-                background: 'rgba(255, 255, 255, 0.02)',
-                borderRadius: '8px',
-                padding: '18px 24px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                minHeight: '84px',
-                boxShadow: 'inset 0 0 10px rgba(0,0,0,0.2)'
-              }}
-            >
-              <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'white', letterSpacing: '0.02em' }}>
-                [ {ph.label} Placeholder ]
-              </span>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-                {ph.desc}
-              </span>
-            </div>
-          ))}
+            { 
+              label: "Telemetry Dashboard", 
+              image: "/images/gridup_telemetry.png",
+              desc: "Live telemetry streams mapping"
+            },
+            { 
+              label: "Events Page Screenshot", 
+              desc: "Countdown timers and dynamic overlays" 
+            },
+            { 
+              label: "Roster Page", 
+              image: "/images/gridup_roster.png",
+              desc: "Member application status grid"
+            }
+          ].map((ph, idx) => {
+            if (ph.image) {
+              return (
+                <div 
+                  key={idx}
+                  style={{
+                    position: 'relative',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    aspectRatio: '16/9',
+                    background: '#09090b',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                  }}
+                  className="screenshot-card"
+                >
+                  <img 
+                    src={ph.image} 
+                    alt={ph.label} 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover',
+                      display: 'block',
+                      transition: 'transform 0.3s ease'
+                    }} 
+                    className="screenshot-img"
+                  />
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)',
+                    padding: '12px 16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'flex-end'
+                  }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'white' }}>
+                      {ph.label}
+                    </span>
+                    <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.7)', marginTop: '2px' }}>
+                      {ph.desc}
+                    </span>
+                  </div>
+                </div>
+              );
+            }
+            return (
+              <div 
+                key={idx} 
+                style={{
+                  border: '1px dashed rgba(255, 255, 255, 0.15)',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  borderRadius: '8px',
+                  padding: '18px 24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                  aspectRatio: '16/9',
+                  boxShadow: 'inset 0 0 10px rgba(0,0,0,0.2)'
+                }}
+              >
+                <span style={{ fontSize: '0.8rem', fontWeight: '700', color: 'white', letterSpacing: '0.02em' }}>
+                  [ {ph.label} Placeholder ]
+                </span>
+                <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)', marginTop: '4px' }}>
+                  {ph.desc}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </div>
     </motion.div>
