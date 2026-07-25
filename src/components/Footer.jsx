@@ -1,5 +1,4 @@
 import React from 'react';
-import { Code, MessageSquare, Share2, Mail } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const Footer = () => {
@@ -39,16 +38,6 @@ const Footer = () => {
               <li><a href="#about" onClick={(e) => handleNavClick(e, '#about')}>About</a></li>
               <li><a href="#contact" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a></li>
             </ul>
-          </div>
-
-          <div className="footer-social">
-            <h4>Social</h4>
-            <div className="social-icons">
-              <a href="#" className="social-link"><Code size={20} /></a>
-              <a href="#" className="social-link"><MessageSquare size={20} /></a>
-              <a href="#" className="social-link"><Share2 size={20} /></a>
-              <a href="#" className="social-link"><Mail size={20} /></a>
-            </div>
           </div>
         </div>
         
