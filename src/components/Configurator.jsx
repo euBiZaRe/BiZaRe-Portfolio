@@ -24,12 +24,12 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
   
   // Feature add-ons (Fixed-Price)
   const projectAddOns = [
-    { id: 'auth', name: 'User Authentication', price: 150, desc: 'Secure login, profile pages, and roles' },
-    { id: 'database', name: 'Secure Database Integration', price: 200, desc: 'Store app data, products, or portfolios' },
-    { id: 'stripe', name: 'E-Commerce / Payment Setup', price: 250, desc: 'Stripe payments, invoicing, and subscriptions' },
-    { id: 'cms', name: 'CMS & Admin Dashboard', price: 250, desc: 'Admin panel to manage website content' },
-    { id: 'seo', name: 'Advanced SEO & Schema', price: 100, desc: 'Structured markup and high ranking preparation' },
-    { id: 'motion', name: 'Premium UI Motion Graphics', price: 150, desc: 'Smooth, custom animations & transitions' }
+    { id: 'auth', name: 'User Authentication', price: 90, desc: 'Secure login, profile pages, and roles' },
+    { id: 'database', name: 'Secure Database Integration', price: 120, desc: 'Store app data, products, or portfolios' },
+    { id: 'stripe', name: 'E-Commerce / Payment Setup', price: 150, desc: 'Stripe payments, invoicing, and subscriptions' },
+    { id: 'cms', name: 'CMS & Admin Dashboard', price: 150, desc: 'Admin panel to manage website content' },
+    { id: 'seo', name: 'Advanced SEO & Schema', price: 60, desc: 'Structured markup and high ranking preparation' },
+    { id: 'motion', name: 'Premium UI Motion Graphics', price: 90, desc: 'Smooth, custom animations & transitions' }
   ];
 
   // Feature add-ons (Subscriptions)
