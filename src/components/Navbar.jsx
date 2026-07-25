@@ -20,6 +20,7 @@ const Navbar = ({ cartCount, onCartOpen, currency, onCurrencyChange }) => {
     { name: 'Home', href: '#home', isRoute: false },
     { name: 'Projects', href: '#projects', isRoute: false },
     { name: 'Services', href: '/services', isRoute: true },
+    { name: 'Stream', href: '/stream', isRoute: true },
     { name: 'About', href: '#about', isRoute: false },
     { name: 'Contact', href: '#contact', isRoute: false },
   ];

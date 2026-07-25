@@ -7,6 +7,7 @@ import ServicesPage from './pages/ServicesPage';
 import ProjectDetails from './pages/ProjectDetails';
 import Admin from './pages/Admin';
 import AIChat from './pages/AIChat';
+import StreamPage from './pages/StreamPage';
 import ScopeBoard from './components/ScopeBoard';
 import OnboardingWizard from './components/OnboardingWizard';
 import './App.css';
@@ -133,6 +134,7 @@ function AppContent() {
         <Route path="/project/:id" element={<ProjectDetails />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/ai-demo" element={<AIChat />} />
+        <Route path="/stream" element={<StreamPage />} />
       </Routes>
       
       {!isChatPage && <Footer />}
