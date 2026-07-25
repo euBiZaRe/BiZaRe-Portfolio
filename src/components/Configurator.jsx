@@ -5,9 +5,9 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
   
   // Available base packages (Fixed-Price)
   const projectPackages = [
-    { id: 'landing-page', name: 'Launch Landing Page', basePrice: 129, minPages: 1, maxPages: 2 },
-    { id: 'business-platform', name: 'Business Website', basePrice: 399, minPages: 3, maxPages: 8 },
-    { id: 'custom-application', name: 'Custom Web App / Startup MVP', basePrice: 799, minPages: 5, maxPages: 20 }
+    { id: 'landing-page', name: 'Launch Landing Page', basePrice: 129, minPages: 1, maxPages: 2, baselinePages: 1 },
+    { id: 'business-platform', name: 'Business Website', basePrice: 399, minPages: 3, maxPages: 8, baselinePages: 5 },
+    { id: 'custom-application', name: 'Custom Web App / Startup MVP', basePrice: 799, minPages: 5, maxPages: 20, baselinePages: 5 }
   ];
 
   // Available base packages (Subscriptions)
@@ -90,7 +90,7 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
 
     if (billingModel === 'project') {
       // Extra pages fee ($50 per page beyond baseline)
-      const baselinePages = activePkg.minPages;
+      const baselinePages = activePkg.baselinePages || activePkg.minPages;
       if (pages > baselinePages) {
         total += (pages - baselinePages) * 50;
       }

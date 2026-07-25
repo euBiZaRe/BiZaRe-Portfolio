@@ -35,7 +35,7 @@ const DEFAULT_PROJECT_SCOPE = {
   timeline: 'standard',
   features: ['seo'],
   featuresText: ['Advanced SEO & Schema'],
-  price: 559
+  price: 459
 };
 
 const DEFAULT_SUBSCRIPTION_SCOPE = {
