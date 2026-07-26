@@ -146,9 +146,18 @@ function AppContent() {
         scope={scope}
         currency={currency}
         formatPrice={formatPrice}
+        onOpenWizard={() => {
+          setIsScopeBoardOpen(false);
+          setIsOnboardingOpen(true);
+        }}
         onCheckout={() => {
           setIsScopeBoardOpen(false);
           setIsOnboardingOpen(true);
+        }}
+        onResetScope={() => {
+          setScope(billingModel === 'project' ? DEFAULT_PROJECT_SCOPE : DEFAULT_SUBSCRIPTION_SCOPE);
+          setIsScopeBoardOpen(false);
+          triggerToast('Scope reset to default tier configuration.');
         }}
         onReset={() => {
           setScope(billingModel === 'project' ? DEFAULT_PROJECT_SCOPE : DEFAULT_SUBSCRIPTION_SCOPE);

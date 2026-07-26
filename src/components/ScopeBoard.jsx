@@ -1,9 +1,21 @@
 import React from 'react';
 import { X, CheckCircle, RefreshCw, AlertCircle, FileText } from 'lucide-react';
 
-export default function ScopeBoard({ scope, isOpen, onClose, onOpenWizard, onResetScope, currency, formatPrice }) {
+export default function ScopeBoard({ 
+  scope, 
+  isOpen, 
+  onClose, 
+  onOpenWizard, 
+  onCheckout, 
+  onResetScope, 
+  onReset, 
+  currency, 
+  formatPrice 
+}) {
   if (!isOpen) return null;
 
+  const handleOpenWizard = onOpenWizard || onCheckout;
+  const handleResetScope = onResetScope || onReset;
   const isSubModel = scope && scope.billingModel === 'subscription';
 
   return (
@@ -68,7 +80,7 @@ export default function ScopeBoard({ scope, isOpen, onClose, onOpenWizard, onRes
             <button 
               className="btn btn-secondary" 
               onClick={() => {
-                onResetScope();
+                if (handleResetScope) handleResetScope();
                 onClose();
               }}
             >
@@ -172,7 +184,10 @@ export default function ScopeBoard({ scope, isOpen, onClose, onOpenWizard, onRes
                 <button 
                   className="btn btn-secondary" 
                   style={{ padding: '12px' }}
-                  onClick={onResetScope}
+                  onClick={() => {
+                    if (handleResetScope) handleResetScope();
+                    onClose();
+                  }}
                   title="Reset Scope"
                 >
                   <RefreshCw size={18} />
@@ -181,7 +196,7 @@ export default function ScopeBoard({ scope, isOpen, onClose, onOpenWizard, onRes
                   className="btn btn-primary" 
                   style={{ flexGrow: 1, padding: '14px' }}
                   onClick={() => {
-                    onOpenWizard();
+                    if (handleOpenWizard) handleOpenWizard();
                     onClose();
                   }}
                 >
