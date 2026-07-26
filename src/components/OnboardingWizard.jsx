@@ -17,8 +17,8 @@ export default function OnboardingWizard({ scope, isOpen, onClose, onSubmitSucce
     startDate: 'asap',
     contactName: '',
     contactEmail: '',
-    contactPhone: '',
-    companyName: ''
+    preferredContactMethod: 'Discord',
+    contactHandle: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -352,27 +352,32 @@ export default function OnboardingWizard({ scope, isOpen, onClose, onSubmitSucce
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }} className="contact-row">
                   <div className="form-group">
-                    <label className="form-label" htmlFor="companyName">Company / Organization</label>
-                    <input
-                      type="text"
-                      id="companyName"
-                      name="companyName"
-                      value={formData.companyName}
+                    <label className="form-label" htmlFor="preferredContactMethod">Best Place to Contact</label>
+                    <select
+                      id="preferredContactMethod"
+                      name="preferredContactMethod"
+                      value={formData.preferredContactMethod}
                       onChange={handleInputChange}
-                      placeholder="e.g. Acme Corp (Optional)"
-                      className="form-input"
-                    />
+                      className="form-input form-select"
+                    >
+                      <option value="Discord">Discord</option>
+                      <option value="Email">Email</option>
+                      <option value="Telegram">Telegram</option>
+                      <option value="WhatsApp">WhatsApp</option>
+                      <option value="Phone / SMS">Phone / SMS</option>
+                      <option value="Other">Other</option>
+                    </select>
                   </div>
 
                   <div className="form-group">
-                    <label className="form-label" htmlFor="contactPhone">Phone Number</label>
+                    <label className="form-label" htmlFor="contactHandle">Contact Handle / Details</label>
                     <input
-                      type="tel"
-                      id="contactPhone"
-                      name="contactPhone"
-                      value={formData.contactPhone}
+                      type="text"
+                      id="contactHandle"
+                      name="contactHandle"
+                      value={formData.contactHandle}
                       onChange={handleInputChange}
-                      placeholder="e.g. +1 555-0199 (Optional)"
+                      placeholder="e.g. @username or phone #"
                       className="form-input"
                     />
                   </div>
