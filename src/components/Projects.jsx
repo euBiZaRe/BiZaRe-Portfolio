@@ -143,7 +143,8 @@ const FeaturedProjectShowcase = () => {
               desc: "Live telemetry streams mapping"
             },
             { 
-              label: "Events Page Screenshot", 
+              label: "Events Page", 
+              image: "/images/gridup_events.png",
               desc: "Countdown timers and dynamic overlays" 
             },
             { 
