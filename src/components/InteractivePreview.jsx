@@ -3,7 +3,7 @@ import {
   Moon, Sun, ShoppingCart, Lock, Unlock, Eye, Edit3, Save, 
   Trash2, Plus, Check, CheckCircle2, ChevronRight, BarChart2, 
   Users, Settings, ArrowRight, CheckCircle, Mail, MessageSquare, AlertCircle,
-  Heart, Play, Layers, Globe, Kanban, Sparkles, Send
+  Heart, Play, Layers, Globe, Kanban, Sparkles, Send, BookOpen, Award
 } from 'lucide-react';
 
 export default function InteractivePreview({ packageId, features, pagesCount, billingModel }) {
@@ -27,8 +27,6 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
   const [cmsMode, setCmsMode] = useState(false);
   const [editableHeroTitle, setEditableHeroTitle] = useState('');
   const [editableSubtext, setEditableSubtext] = useState('');
-  
-  const [activeTab, setActiveTab] = useState('home'); // subpage navigator
   
   // Contact form state
   const [contactName, setContactName] = useState('');
@@ -276,36 +274,34 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
       
       {/* Interactive Controls Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div>
-            <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--secondary)', fontWeight: 700 }}>
-              Live Mockup Preview
-            </span>
-            {/* Template Preset Dropdown */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
-              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Template Style:</span>
-              <select
-                value={templateStyle}
-                onChange={(e) => setTemplateStyle(e.target.value)}
-                style={{
-                  fontSize: '0.7rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  color: 'white',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '4px',
-                  padding: '2px 8px',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  outline: 'none'
-                }}
-              >
-                {getPresetOptions().map(opt => (
-                  <option key={opt.id} value={opt.id} style={{ backgroundColor: '#18181b', color: 'white' }}>
-                    {opt.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <div>
+          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--secondary)', fontWeight: 700 }}>
+            Live Mockup Preview
+          </span>
+          {/* Template Preset Dropdown */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Template Style:</span>
+            <select
+              value={templateStyle}
+              onChange={(e) => setTemplateStyle(e.target.value)}
+              style={{
+                fontSize: '0.7rem',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                color: 'white',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '4px',
+                padding: '2px 8px',
+                cursor: 'pointer',
+                fontWeight: 600,
+                outline: 'none'
+              }}
+            >
+              {getPresetOptions().map(opt => (
+                <option key={opt.id} value={opt.id} style={{ backgroundColor: '#18181b', color: 'white' }}>
+                  {opt.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         
@@ -434,168 +430,204 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
           fontFamily: 'system-ui, sans-serif'
         }}>
 
-          {/* PACKAGE 1: LANDING PAGE PRESETS */}
+          {/* ==================================================== */}
+          {/* PACKAGE 1: LANDING PAGE PRESETS                      */}
+          {/* ==================================================== */}
           {packageId === 'landing-page' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               
-              {/* Core Landing Page Header Navbar */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center' }}>
-                <div style={{ fontWeight: 800, fontSize: '0.9rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: accent }}></div>
-                  <span>{templateStyle === 'minimal-product' ? 'MinimalSpace' : templateStyle === 'creative-portfolio' ? 'Matty.R' : 'SaaSify'}</span>
-                </div>
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
-                  <span style={{ color: s.textMuted, fontSize: '0.7rem' }}>Features</span>
-                  <span style={{ color: s.textMuted, fontSize: '0.7rem' }}>Pricing</span>
-                  {features.includes('auth') && (
-                    <button 
-                      onClick={() => isLoggedIn ? setIsLoggedIn(false) : setShowAuthModal(true)}
-                      style={{ 
-                        backgroundColor: accent, 
-                        color: 'white', 
-                        fontSize: '0.65rem', 
-                        padding: '4px 8px', 
-                        borderRadius: '4px',
-                        fontWeight: 600
-                      }}
-                    >
-                      {isLoggedIn ? 'Sign Out' : 'Sign In'}
-                    </button>
-                  )}
-                </div>
-              </div>
-
-              {/* Layout Content depending on style */}
-              <div style={{ padding: '32px 16px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
-                
-                {/* Floating decor particles if Motion is selected */}
-                {features.includes('motion') && (
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
-                    <div style={{ position: 'absolute', width: '20px', height: '20px', borderRadius: '50%', backgroundColor: accent, opacity: 0.1, top: '20%', left: '15%', animation: 'float 6s infinite ease-in-out' }}></div>
-                    <div style={{ position: 'absolute', width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#06b6d4', opacity: 0.1, bottom: '20%', right: '15%', animation: 'float 8s infinite ease-in-out' }}></div>
+              {/* 1A. PRESET: MODERN SAAS / TECH */}
+              {templateStyle === 'tech-saas' && (
+                <div style={{ fontFamily: 'monospace', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                  {/* SaaS Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center' }}>
+                    <div style={{ fontWeight: 800, fontSize: '0.85rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span style={{ color: accent }}>&lt;</span>SaaSify<span style={{ color: accent }}>/&gt;</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '14px', alignItems: 'center', fontSize: '0.65rem' }}>
+                      <span style={{ color: s.textMuted }}>features.json</span>
+                      <span style={{ color: s.textMuted }}>api_docs</span>
+                    </div>
                   </div>
-                )}
 
-                {/* Theme Tag */}
-                <span style={{ 
-                  backgroundColor: `rgba(${accent === '#7c3aed' ? '124,58,237' : accent === '#06b6d4' ? '6,182,212' : accent === '#10b981' ? '16,185,129' : '244,63,94'}, 0.1)`, 
-                  color: accent, 
-                  fontSize: '0.6rem', 
-                  padding: '2px 8px', 
-                  borderRadius: '20px', 
-                  fontWeight: 700,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em'
-                }}>
-                  {templateStyle === 'tech-saas' && 'SaaS Product Template'}
-                  {templateStyle === 'minimal-product' && 'Minimal E-Book Template'}
-                  {templateStyle === 'creative-portfolio' && 'Interactive Portfolio'}
-                </span>
-
-                {/* Editable Area */}
-                {cmsMode ? (
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '380px', margin: '12px auto' }}>
-                    <input 
-                      type="text" 
-                      value={editableHeroTitle} 
-                      onChange={(e) => setEditableHeroTitle(e.target.value)}
-                      style={{ padding: '4px 8px', fontSize: '1.2rem', fontWeight: 800, borderRadius: '4px', border: `1px solid ${accent}`, background: s.bg, color: s.text, textAlign: 'center' }}
-                    />
-                    <textarea 
-                      value={editableSubtext} 
-                      onChange={(e) => setEditableSubtext(e.target.value)}
-                      rows={2}
-                      style={{ padding: '4px 8px', fontSize: '0.75rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.textMuted, textAlign: 'center', resize: 'none' }}
-                    />
-                  </div>
-                ) : (
-                  <>
-                    <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: s.text, marginTop: '8px', lineHeight: 1.2, maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
-                      {editableHeroTitle}
+                  {/* SaaS Hero */}
+                  <div style={{ padding: '24px 16px', textAlign: 'center' }}>
+                    <h1 style={{ fontSize: '1.25rem', fontWeight: 800, color: s.text, lineHeight: 1.2 }}>
+                      {cmsMode ? (
+                        <input 
+                          type="text" 
+                          value={editableHeroTitle} 
+                          onChange={(e) => setEditableHeroTitle(e.target.value)}
+                          style={{ padding: '2px 6px', fontSize: '1.1rem', borderRadius: '4px', border: `1px solid ${accent}`, background: s.bg, color: s.text, textAlign: 'center', width: '90%' }}
+                        />
+                      ) : editableHeroTitle}
                     </h1>
-                    <p style={{ fontSize: '0.75rem', color: s.textMuted, marginTop: '8px', maxWidth: '360px', marginLeft: 'auto', marginRight: 'auto' }}>
-                      {editableSubtext}
+                    <p style={{ fontSize: '0.7rem', color: s.textMuted, marginTop: '8px', maxWidth: '340px', marginLeft: 'auto', marginRight: 'auto' }}>
+                      {cmsMode ? (
+                        <textarea 
+                          value={editableSubtext} 
+                          onChange={(e) => setEditableSubtext(e.target.value)}
+                          rows={2}
+                          style={{ padding: '2px 6px', fontSize: '0.65rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.textMuted, textAlign: 'center', width: '90%', resize: 'none' }}
+                        />
+                      ) : editableSubtext}
                     </p>
-                  </>
-                )}
 
-                {/* Template Preset Specific Widgets */}
-                {templateStyle === 'tech-saas' && (
-                  <div style={{ marginTop: '16px' }}>
-                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
-                      {features.includes('stripe') ? (
-                        <button 
-                          onClick={() => handleAddToCart({ id: 'lp-saas', name: 'SaaS License', price: 49 })}
-                          style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}
-                        >
-                          <ShoppingCart size={12} /> Buy Plan — $49
-                        </button>
-                      ) : (
-                        <button style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600 }}>
-                          Start Free Trial
-                        </button>
-                      )}
-                      <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '6px' }}>
-                        View Features
+                    {/* Interactive mini analytics card embedded in landing page hero */}
+                    <div style={{ margin: '16px auto 0', maxWidth: '320px', padding: '12px', borderRadius: '8px', border: `1px solid ${accent}`, background: s.card, textAlign: 'left', boxShadow: `0 0 15px rgba(${accent === '#7c3aed' ? '124,58,237' : '6,182,212'}, 0.15)` }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '0.6rem', color: s.textMuted, fontWeight: 700 }}>DATABASE telemetry.db</span>
+                        <span style={{ fontSize: '0.55rem', color: '#10b981', background: 'rgba(16,185,129,0.1)', padding: '1px 4px', borderRadius: '3px' }}>60FPS LIVE</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', height: '30px' }}>
+                        {[40, 70, 50, 90, 60, 95, 80].map((h, idx) => (
+                          <div key={idx} style={{ flex: 1, height: `${h}%`, backgroundColor: idx === 5 ? accent : 'rgba(255,255,255,0.08)', borderRadius: '2px' }}></div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '16px' }}>
+                      <button 
+                        onClick={() => handleAddToCart({ id: 'lp-saas', name: 'SaaS License', price: 49 })}
+                        style={{ backgroundColor: accent, color: 'white', padding: '6px 12px', borderRadius: '4px', fontWeight: 600, fontSize: '0.7rem', display: 'flex', alignItems: 'center', gap: '4px' }}
+                      >
+                        <ShoppingCart size={10} /> Buy Plan — $49
+                      </button>
+                      <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '4px', fontSize: '0.7rem' }}>
+                        API Console
                       </button>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
 
-                {templateStyle === 'minimal-product' && (
-                  <div style={{ marginTop: '16px', maxWidth: '280px', margin: '16px auto 0' }}>
-                    <div style={{ border: `1px solid ${s.border}`, padding: '14px', borderRadius: '8px', background: s.card, textAlign: 'left' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
-                        <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>E-Book PDF Bundle</span>
-                        <span style={{ fontSize: '1rem', fontWeight: 800, color: accent }}>$19.00</span>
-                      </div>
-                      <input 
-                        type="email" 
-                        placeholder="Enter email to purchase..." 
-                        style={{ width: '100%', padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.text, marginBottom: '6px' }}
-                      />
-                      {features.includes('stripe') ? (
+              {/* 1B. PRESET: MINIMALIST E-BOOK */}
+              {templateStyle === 'minimal-product' && (
+                <div style={{ fontFamily: 'Georgia, serif', display: 'flex', flexDirection: 'column', height: '100%', padding: '20px' }}>
+                  {/* Split layout: cover on left, details on right */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: '16px', flex: 1, alignItems: 'center' }}>
+                    {/* Mock Book Cover */}
+                    <div style={{ 
+                      aspectRatio: '3/4', 
+                      background: `linear-gradient(135deg, ${accent} 0%, #1e1b4b 100%)`, 
+                      borderRadius: '6px', 
+                      boxShadow: '5px 5px 15px rgba(0,0,0,0.3)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      padding: '16px',
+                      color: 'white',
+                      textAlign: 'left'
+                    }}>
+                      <div style={{ fontSize: '0.55rem', textTransform: 'uppercase', letterSpacing: '2px', opacity: 0.8 }}>Special Edition</div>
+                      <div style={{ fontSize: '0.95rem', fontWeight: 'bold', lineHeight: 1.2 }}>THE CREATIVE LAB</div>
+                      <div style={{ fontSize: '0.5rem', opacity: 0.7 }}>Matty Roberts</div>
+                    </div>
+
+                    {/* Book Pitch details */}
+                    <div style={{ textAlign: 'left' }}>
+                      <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: s.text, lineHeight: 1.2 }}>
+                        {cmsMode ? (
+                          <input 
+                            type="text" 
+                            value={editableHeroTitle} 
+                            onChange={(e) => setEditableHeroTitle(e.target.value)}
+                            style={{ padding: '2px 4px', fontSize: '1rem', borderRadius: '4px', border: `1px solid ${accent}`, background: s.bg, color: s.text, width: '100%' }}
+                          />
+                        ) : editableHeroTitle}
+                      </h2>
+                      <p style={{ fontSize: '0.65rem', color: s.textMuted, marginTop: '6px', fontStyle: 'italic' }}>
+                        {cmsMode ? (
+                          <textarea 
+                            value={editableSubtext} 
+                            onChange={(e) => setEditableSubtext(e.target.value)}
+                            rows={2}
+                            style={{ padding: '2px 4px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.textMuted, width: '100%', resize: 'none' }}
+                          />
+                        ) : editableSubtext}
+                      </p>
+
+                      <div style={{ marginTop: '12px' }}>
+                        <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Format: Interactive PDF & EPUB</div>
+                        <div style={{ fontSize: '0.85rem', fontWeight: 'bold', color: accent, margin: '4px 0' }}>Price: $19.00</div>
+                        
                         <button 
                           onClick={() => handleAddToCart({ id: 'lp-book', name: 'Minimal E-Book PDF', price: 19 })}
-                          style={{ backgroundColor: accent, color: 'white', width: '100%', padding: '4px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}
+                          style={{ backgroundColor: accent, color: 'white', border: 'none', borderRadius: '4px', padding: '5px 12px', fontSize: '0.65rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
                         >
-                          Checkout with Stripe
+                          <BookOpen size={10} /> Buy E-Book
                         </button>
-                      ) : (
-                        <button style={{ backgroundColor: accent, color: 'white', width: '100%', padding: '4px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}>
-                          Subscribe Newsletter
-                        </button>
-                      )}
+                      </div>
                     </div>
                   </div>
-                )}
+                </div>
+              )}
 
-                {templateStyle === 'creative-portfolio' && (
-                  <div style={{ marginTop: '16px' }}>
-                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
-                      <button style={{ backgroundColor: accent, color: 'white', padding: '6px 12px', borderRadius: '6px', fontWeight: 600 }}>
-                        View Creative Works
-                      </button>
-                      <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '6px' }}>
-                        Read Resume
-                      </button>
+              {/* 1C. PRESET: CREATIVE PORTFOLIO */}
+              {templateStyle === 'creative-portfolio' && (
+                <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '16px' }}>
+                  {/* Asymmetric Header */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 800, letterSpacing: '1px' }}>MATTY ROBERTS</span>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: accent }}></span>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '16px', flex: 1, alignItems: 'center' }}>
+                    {/* Bio intro */}
+                    <div style={{ textAlign: 'left' }}>
+                      <h2 style={{ fontSize: '1.2rem', fontWeight: 900, color: s.text, textTransform: 'uppercase', letterSpacing: '-0.5px' }}>
+                        {cmsMode ? (
+                          <input 
+                            type="text" 
+                            value={editableHeroTitle} 
+                            onChange={(e) => setEditableHeroTitle(e.target.value)}
+                            style={{ padding: '2px 4px', fontSize: '0.95rem', borderRadius: '4px', border: `1px solid ${accent}`, background: s.bg, color: s.text, width: '100%' }}
+                          />
+                        ) : editableHeroTitle}
+                      </h2>
+                      <p style={{ fontSize: '0.7rem', color: s.textMuted, marginTop: '6px' }}>
+                        {cmsMode ? (
+                          <textarea 
+                            value={editableSubtext} 
+                            onChange={(e) => setEditableSubtext(e.target.value)}
+                            rows={2}
+                            style={{ padding: '2px 4px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.textMuted, width: '100%', resize: 'none' }}
+                          />
+                        ) : editableSubtext}
+                      </p>
+
+                      <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                        <button style={{ backgroundColor: accent, color: 'white', padding: '5px 10px', borderRadius: '2px', fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase' }}>
+                          View Works
+                        </button>
+                        <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '5px 10px', borderRadius: '2px', fontSize: '0.65rem', textTransform: 'uppercase' }}>
+                          Contact
+                        </button>
+                      </div>
                     </div>
-                    {/* Tiny visual grids */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px', maxWidth: '340px', margin: '20px auto 0' }}>
-                      {['⚡ Fast Rendering', '🎨 Custom Design', '🛠️ React Architect'].map((label, idx) => (
-                        <div key={idx} style={{ padding: '6px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, fontSize: '0.6rem', fontWeight: 600 }}>
-                          {label}
+
+                    {/* Creative Card grid mockups */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      {[
+                        { title: 'GRiD UP telemetry', type: 'Community App' },
+                        { title: 'Esports Roster Portal', type: 'Database app' }
+                      ].map((item, idx) => (
+                        <div key={idx} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '4px', background: s.card, textAlign: 'left', cursor: 'pointer' }}>
+                          <span style={{ fontSize: '0.5rem', color: accent, fontWeight: 700, textTransform: 'uppercase' }}>{item.type}</span>
+                          <div style={{ fontSize: '0.65rem', fontWeight: 700, marginTop: '1px' }}>{item.title}</div>
                         </div>
                       ))}
                     </div>
                   </div>
-                )}
+                </div>
+              )}
 
-              </div>
             </div>
           )}
 
-          {/* PACKAGE 2: BUSINESS WEBSITE PRESETS */}
+          {/* ==================================================== */}
+          {/* PACKAGE 2: BUSINESS WEBSITE PRESETS                 */}
+          {/* ==================================================== */}
           {packageId === 'business-platform' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               
@@ -606,30 +638,19 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   <span>{templateStyle === 'storefront' ? 'ApexShop' : templateStyle === 'blog-hub' ? 'TechFlow' : 'ApexCorp'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  {[
-                    { id: 'home', name: 'Home' },
-                    { id: 'services', name: templateStyle === 'storefront' ? 'Shop' : templateStyle === 'blog-hub' ? 'Feed' : 'Services' },
-                    { id: 'contact', name: 'Contact' }
-                  ].map(tab => (
-                    <span 
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      style={{ 
-                        color: activeTab === tab.id ? accent : s.textMuted, 
-                        fontWeight: activeTab === tab.id ? 700 : 500,
-                        fontSize: '0.7rem',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      {tab.name}
-                    </span>
-                  ))}
+                  <span style={{ color: activeTab === 'home' ? accent : s.textMuted, fontWeight: activeTab === 'home' ? 700 : 500, fontSize: '0.7rem', cursor: 'pointer' }} onClick={() => setActiveTab('home')}>
+                    Home
+                  </span>
+                  <span style={{ color: activeTab === 'shop' ? accent : s.textMuted, fontWeight: activeTab === 'shop' ? 700 : 500, fontSize: '0.7rem', cursor: 'pointer' }} onClick={() => setActiveTab('shop')}>
+                    {templateStyle === 'storefront' ? 'Catalog' : templateStyle === 'blog-hub' ? 'Articles' : 'Services'}
+                  </span>
+                  <span style={{ color: activeTab === 'contact' ? accent : s.textMuted, fontWeight: activeTab === 'contact' ? 700 : 500, fontSize: '0.7rem', cursor: 'pointer' }} onClick={() => setActiveTab('contact')}>
+                    Contact
+                  </span>
+                  
                   {features.includes('stripe') && (
-                    <button 
-                      onClick={() => setShowCart(!showCart)}
-                      style={{ position: 'relative', background: 'none', border: 'none', color: s.text, cursor: 'pointer' }}
-                    >
-                      <ShoppingCart size={14} />
+                    <button onClick={() => setShowCart(!showCart)} style={{ position: 'relative', background: 'none', border: 'none', color: s.text, cursor: 'pointer' }}>
+                      <ShoppingCart size={12} />
                       {cart.length > 0 && (
                         <span style={{ position: 'absolute', top: '-6px', right: '-8px', backgroundColor: accent, color: 'white', borderRadius: '50%', width: '12px', height: '12px', fontSize: '0.55rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {cart.reduce((a, b) => a + b.qty, 0)}
@@ -640,76 +661,93 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                 </div>
               </div>
 
-              {/* Sub-Pages based on Tab */}
+              {/* Sub-Pages based on Template Style (Bypassing home tab so they look completely unique!) */}
               <div style={{ flex: 1, padding: '16px' }}>
-                
-                {/* 1. Home Tab */}
-                {activeTab === 'home' && (
-                  <div>
-                    <div style={{ borderLeft: `3px solid ${accent}`, paddingLeft: '10px', marginBottom: '14px' }}>
-                      <h2 style={{ fontSize: '1.1rem', fontWeight: 800, color: s.text }}>{editableHeroTitle}</h2>
-                      <p style={{ fontSize: '0.7rem', color: s.textMuted }}>{editableSubtext}</p>
-                    </div>
 
-                    <div style={{ background: s.card, borderRadius: '8px', padding: '12px', border: `1px solid ${s.border}` }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.75rem', marginBottom: '4px' }}>
-                        {templateStyle === 'storefront' ? 'Secure Storefront Dashboard' : 'Professional Solution Platform'}
-                      </div>
-                      <p style={{ fontSize: '0.65rem', color: s.textMuted }}>
-                        This multi-page layout demonstrates standard headers, responsive grids, and customizable color schemes.
-                      </p>
-                      <div style={{ marginTop: '8px', fontSize: '0.65rem', color: accent, fontWeight: 700 }}>
-                        ⚙️ currently displays {pagesCount} active pages.
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* 2. Services / Shop Tab */}
-                {activeTab === 'services' && (
+                {/* 2A. PRESET: CORPORATE SOLUTIONS */}
+                {templateStyle === 'corporate' && (
                   <div>
-                    {/* A. Corporate Preset Services */}
-                    {templateStyle === 'corporate' && (
+                    {activeTab === 'home' ? (
                       <div>
-                        <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Professional Solutions</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                        <div style={{ borderLeft: `3px solid ${accent}`, paddingLeft: '10px', marginBottom: '14px', textAlign: 'left' }}>
+                          <h2 style={{ fontSize: '1.05rem', fontWeight: 800, color: s.text }}>{editableHeroTitle}</h2>
+                          <p style={{ fontSize: '0.65rem', color: s.textMuted }}>{editableSubtext}</p>
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginTop: '12px' }}>
                           {[
-                            { name: 'Corporate Consulting', desc: 'Enterprise scaling strategy audits.' },
-                            { name: 'Software Development', desc: 'Secure database pipelines & Web APIs.' }
+                            { name: 'Corporate Consulting', icon: <Layers size={12} /> },
+                            { name: 'API System Integrations', icon: <Globe size={12} /> }
                           ].map((srv, idx) => (
-                            <div key={idx} style={{ padding: '10px', borderRadius: '6px', border: `1px solid ${s.border}`, backgroundColor: s.card }}>
-                              <div style={{ fontWeight: 700, fontSize: '0.7rem', color: s.text }}>{srv.name}</div>
-                              <p style={{ fontSize: '0.6rem', color: s.textMuted, marginTop: '2px' }}>{srv.desc}</p>
+                            <div key={idx} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'left', display: 'flex', gap: '6px', alignItems: 'center' }}>
+                              <span style={{ color: accent }}>{srv.icon}</span>
+                              <span style={{ fontSize: '0.65rem', fontWeight: 600 }}>{srv.name}</span>
                             </div>
                           ))}
                         </div>
                       </div>
+                    ) : activeTab === 'shop' ? (
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px' }}>Our Services</h3>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
+                            <div style={{ fontWeight: 700, fontSize: '0.7rem' }}>Consulting Retainer Package</div>
+                            <p style={{ fontSize: '0.6rem', color: s.textMuted, marginTop: '2px' }}>Weekly strategic roadmaps and technology optimization planning.</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px' }}>Schedule Consultation</h3>
+                        <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <input type="text" placeholder="Full Name" required style={{ padding: '4px 6px', fontSize: '0.65rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }} />
+                          <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px', borderRadius: '4px', fontSize: '0.65rem' }}>Submit Inquiry</button>
+                        </form>
+                      </div>
                     )}
+                  </div>
+                )}
 
-                    {/* B. Storefront Preset Shop catalog */}
-                    {templateStyle === 'storefront' && (
+                {/* 2B. PRESET: E-COMMERCE STOREFRONT (Straight to product catalog) */}
+                {templateStyle === 'storefront' && (
+                  <div>
+                    {activeTab === 'contact' ? (
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px' }}>Support Center</h3>
+                        <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <input type="email" placeholder="Billing Email" required style={{ padding: '4px 6px', fontSize: '0.65rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }} />
+                          <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px', borderRadius: '4px', fontSize: '0.65rem' }}>Send Support Ticket</button>
+                        </form>
+                      </div>
+                    ) : (
+                      // Home and Shop tabs both render the storefront grid directly!
                       <div>
-                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>E-Commerce Catalog</h3>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', textAlign: 'left' }}>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: s.text }}>Store Catalog</span>
+                          <span style={{ fontSize: '0.6rem', color: s.textMuted }}>Filters: Accessories</span>
+                        </div>
+                        
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
                           {[
-                            { id: 'p1', name: 'Desk Dock', price: 89 },
-                            { id: 'p2', name: 'Keyboard', price: 120 },
-                            { id: 'p3', name: 'Office Chair', price: 299 }
+                            { id: 'p1', name: 'Desk Hub Dock', price: 89, grad: 'linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%)' },
+                            { id: 'p2', name: 'Mech Keyboard', price: 120, grad: 'linear-gradient(135deg, #10b981 0%, #047857 100%)' },
+                            { id: 'p3', name: 'Office Chair', price: 299, grad: 'linear-gradient(135deg, #f43f5e 0%, #be123c 100%)' }
                           ].map(prod => (
-                            <div key={prod.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'center' }}>
-                              <div style={{ fontWeight: 700, fontSize: '0.65rem', color: s.text, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{prod.name}</div>
-                              <div style={{ fontSize: '0.7rem', color: accent, fontWeight: 700, margin: '2px 0 6px' }}>${prod.price}</div>
+                            <div key={prod.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                              {/* Color mock thumbnail */}
+                              <div style={{ width: '100%', height: '36px', borderRadius: '4px', background: prod.grad, marginBottom: '6px' }}></div>
+                              <div style={{ fontWeight: 700, fontSize: '0.6rem', color: s.text, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{prod.name}</div>
+                              <div style={{ fontSize: '0.65rem', color: accent, fontWeight: 700, margin: '2px 0 4px' }}>${prod.price}</div>
                               
                               {features.includes('stripe') ? (
                                 <button 
                                   onClick={() => handleAddToCart(prod)}
-                                  style={{ backgroundColor: accent, color: 'white', fontSize: '0.55rem', padding: '2px 4px', borderRadius: '3px', width: '100%', fontWeight: 600 }}
+                                  style={{ backgroundColor: accent, color: 'white', fontSize: '0.55rem', padding: '2px 0', border: 'none', borderRadius: '3px', width: '100%', fontWeight: 600, cursor: 'pointer' }}
                                 >
-                                  Add to Cart
+                                  Buy Now
                                 </button>
                               ) : (
-                                <button style={{ border: `1px solid ${s.border}`, color: s.text, fontSize: '0.55rem', padding: '2px 4px', borderRadius: '3px', width: '100%' }}>
-                                  Out of Stock
+                                <button style={{ border: `1px solid ${s.border}`, color: s.textMuted, fontSize: '0.55rem', padding: '2px 0', borderRadius: '3px', width: '100%' }} disabled>
+                                  Sold Out
                                 </button>
                               )}
                             </div>
@@ -717,73 +755,46 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                         </div>
                       </div>
                     )}
-
-                    {/* C. Blog Hub Preset Feed */}
-                    {templateStyle === 'blog-hub' && (
-                      <div>
-                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Technical Articles Feed</h3>
-                        {features.includes('database') || features.includes('cms') ? (
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                            {[
-                              { title: 'Scaling Cloud Architectures in 2026', date: 'July 28' },
-                              { title: 'Designing High-Performance Frontend APIs', date: 'July 15' }
-                            ].map((art, idx) => (
-                              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
-                                <span style={{ fontWeight: 600, fontSize: '0.65rem', color: s.text }}>{art.title}</span>
-                                <span style={{ fontSize: '0.55rem', color: accent }}>{art.date}</span>
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div style={{ padding: '16px', textAlign: 'center', border: `1px dashed ${s.border}`, borderRadius: '8px' }}>
-                            <AlertCircle size={14} color={accent} style={{ marginBottom: '4px' }} />
-                            <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Database Integration is required to feed dynamic articles here.</div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-
                   </div>
                 )}
 
-                {/* 3. Contact Tab */}
-                {activeTab === 'contact' && (
+                {/* 2C. PRESET: TECHNICAL BLOG HUB (Straight to blog posts feed) */}
+                {templateStyle === 'blog-hub' && (
                   <div>
-                    {contactSubmitted ? (
-                      <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid #10b981', borderRadius: '8px' }}>
-                        <CheckCircle size={20} color="#10b981" style={{ margin: '0 auto 6px' }} />
-                        <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#10b981' }}>Message Received!</div>
-                        <p style={{ fontSize: '0.65rem', color: s.textMuted, marginTop: '2px' }}>We will contact you shortly.</p>
+                    {activeTab === 'contact' ? (
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px' }}>Subscribe to TechFlow</h3>
+                        <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                          <input type="email" placeholder="Your Email Address" required style={{ padding: '4px 6px', fontSize: '0.65rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }} />
+                          <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px', borderRadius: '4px', fontSize: '0.65rem' }}>Join Newsletter</button>
+                        </form>
                       </div>
                     ) : (
-                      <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '280px', margin: '0 auto' }}>
-                        <input 
-                          type="text" 
-                          placeholder="Your Name" 
-                          required
-                          value={contactName} 
-                          onChange={(e) => setContactName(e.target.value)}
-                          style={{ padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
-                        />
-                        <input 
-                          type="email" 
-                          placeholder="Your Email" 
-                          required
-                          value={contactEmail} 
-                          onChange={(e) => setContactEmail(e.target.value)}
-                          style={{ padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
-                        />
-                        <textarea 
-                          placeholder="Project Brief Message..." 
-                          rows={2} 
-                          value={contactMessage}
-                          onChange={(e) => setContactMessage(e.target.value)}
-                          style={{ padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text, resize: 'none' }}
-                        />
-                        <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', borderRadius: '4px', fontWeight: 600, fontSize: '0.7rem' }}>
-                          Submit Form
-                        </button>
-                      </form>
+                      // Home and Shop tabs both render the dynamic blog hub articles grid directly!
+                      <div style={{ textAlign: 'left' }}>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 800, marginBottom: '8px', borderBottom: `1px solid ${s.border}`, paddingBottom: '4px' }}>Editorial Articles</h3>
+                        {features.includes('database') || features.includes('cms') ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            {/* Featured main cover article */}
+                            <div style={{ padding: '10px', borderRadius: '8px', border: `1px solid ${accent}`, background: s.card }}>
+                              <span style={{ fontSize: '0.5rem', color: accent, fontWeight: 700, textTransform: 'uppercase' }}>Featured Article</span>
+                              <div style={{ fontWeight: 800, fontSize: '0.75rem', marginTop: '2px', color: s.text }}>Scaling Cloud APIs in 2026</div>
+                              <p style={{ fontSize: '0.6rem', color: s.textMuted, marginTop: '4px' }}>A deep dive into serverless data queries, db caching, and varnish edge nodes...</p>
+                            </div>
+                            
+                            {/* Minor article */}
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, alignItems: 'center' }}>
+                              <span style={{ fontWeight: 700, fontSize: '0.65rem' }}>CSS Grid vs Flexbox Layouts</span>
+                              <span style={{ fontSize: '0.55rem', color: accent }}>July 15</span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{ padding: '24px', textAlign: 'center', border: `1px dashed ${s.border}`, borderRadius: '8px' }}>
+                            <AlertCircle size={14} color={accent} style={{ margin: '0 auto 4px' }} />
+                            <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Database and CMS features are required to render dynamic article posts.</div>
+                          </div>
+                        )}
+                      </div>
                     )}
                   </div>
                 )}
@@ -792,18 +803,20 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             </div>
           )}
 
-          {/* PACKAGE 3: CUSTOM WEB APP PRESETS (Dashboard, Kanban, Social Feed) */}
+          {/* ==================================================== */}
+          {/* PACKAGE 3: CUSTOM WEB APP PRESETS (Dashboard, Kanban, Forum) */}
+          {/* ==================================================== */}
           {packageId === 'custom-application' && (
             <div style={{ display: 'flex', height: '100%' }}>
               
-              {/* Sidebar */}
+              {/* SaaS Sidebar */}
               <div style={{ width: '80px', backgroundColor: s.card, borderRight: `1px solid ${s.border}`, display: 'flex', flexDirection: 'column', padding: '8px', gap: '12px' }}>
                 <div style={{ fontWeight: 800, fontSize: '0.75rem', color: s.text, textAlign: 'center', marginBottom: '8px', paddingBottom: '8px', borderBottom: `1px solid ${s.border}` }}>
                   SaaS.io
                 </div>
                 {[
                   { id: 'dashboard', label: 'Dashboard', icon: <BarChart2 size={12} /> },
-                  { id: 'users', label: 'Admin Board', icon: <Users size={12} /> },
+                  { id: 'users', label: 'Accounts', icon: <Users size={12} /> },
                   { id: 'settings', label: 'Settings', icon: <Settings size={12} /> }
                 ].map(item => (
                   <button 
@@ -815,7 +828,9 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                       alignItems: 'center', 
                       gap: '3px',
                       color: activeTab === item.id ? accent : s.textMuted,
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      background: 'none',
+                      border: 'none'
                     }}
                   >
                     {item.icon}
@@ -827,12 +842,12 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
               {/* Viewport content */}
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
                 
-                {/* Header */}
+                {/* Header navbar */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center', backgroundColor: s.bg }}>
                   <div style={{ fontWeight: 700, fontSize: '0.75rem' }}>
-                    {templateStyle === 'dashboard' && 'Analytics Overviews'}
-                    {templateStyle === 'task-board' && 'CRM Kanban Board'}
-                    {templateStyle === 'community-feed' && 'Public Forum Board'}
+                    {templateStyle === 'dashboard' && 'Analytics Overview'}
+                    {templateStyle === 'task-board' && 'SaaS Project Board'}
+                    {templateStyle === 'community-feed' && 'SaaS Feed Board'}
                   </div>
                   
                   {/* Auth Indicator */}
@@ -842,18 +857,18 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#22c55e' }}></span>
                           <span style={{ fontSize: '0.65rem', fontWeight: 600 }}>matty_dev</span>
-                          <button onClick={() => setIsLoggedIn(false)} style={{ color: '#ef4444', fontSize: '0.6rem', padding: '0', background: 'none' }}>Logout</button>
+                          <button onClick={() => setIsLoggedIn(false)} style={{ color: '#ef4444', fontSize: '0.6rem', padding: '0', background: 'none', border: 'none', cursor: 'pointer' }}>Logout</button>
                         </div>
                       ) : (
                         <button 
                           onClick={() => setShowAuthModal(true)} 
-                          style={{ border: `1px solid ${accent}`, color: accent, fontSize: '0.65rem', padding: '3px 8px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: 600 }}
+                          style={{ border: `1px solid ${accent}`, color: accent, fontSize: '0.65rem', padding: '3px 8px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: 600, cursor: 'pointer', background: 'none' }}
                         >
-                          <Lock size={10} /> Lock Screen
+                          <Lock size={10} /> Unlock Portal
                         </button>
                       )
                     ) : (
-                      <span style={{ fontSize: '0.65rem', color: s.textMuted }}>No-Auth Portal</span>
+                      <span style={{ fontSize: '0.65rem', color: s.textMuted }}>No-Auth Console</span>
                     )}
                   </div>
                 </div>
@@ -871,14 +886,14 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                       </div>
                       <button 
                         onClick={() => { setIsLoggedIn(true) }}
-                        style={{ backgroundColor: accent, color: 'white', fontSize: '0.65rem', padding: '4px 10px', borderRadius: '4px', fontWeight: 600 }}
+                        style={{ backgroundColor: accent, color: 'white', fontSize: '0.65rem', padding: '4px 10px', borderRadius: '4px', fontWeight: 600, border: 'none', cursor: 'pointer' }}
                       >
                         Bypass Log In
                       </button>
                     </div>
                   ) : (
                     <>
-                      {/* PRESET A: ANALYTICS DASHBOARD */}
+                      {/* 3A. PRESET: METRICS DASHBOARD */}
                       {templateStyle === 'dashboard' && activeTab === 'dashboard' && (
                         <div>
                           {/* Mini stats widgets */}
@@ -899,7 +914,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                           <div style={{ border: `1px solid ${s.border}`, borderRadius: '6px', padding: '10px', background: s.card }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                               <span style={{ fontSize: '0.6rem', fontWeight: 700 }}>Conversion Rates (2026)</span>
-                              <span style={{ fontSize: '0.55rem', color: s.textMuted }}>Updated live via DB</span>
+                              <span style={{ fontSize: '0.55rem', color: s.textMuted }}>Live DB Graph</span>
                             </div>
                             <div style={{ display: 'flex', alignItems: 'flex-end', height: '40px', gap: '14px', paddingLeft: '10px', borderBottom: `1px solid ${s.border}` }}>
                               {[35, 55, 45, 80, 60, 95].map((h, i) => (
@@ -920,7 +935,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                                 <span style={{ fontSize: '0.55rem', color: s.textMuted }}>Stripe API Hook Connected</span>
                                 <button 
                                   onClick={() => handleAddToCart({ id: 'app-upgrade', name: 'Pro SaaS Upgrade', price: 99 })}
-                                  style={{ backgroundColor: accent, color: 'white', fontSize: '0.55rem', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}
+                                  style={{ backgroundColor: accent, color: 'white', fontSize: '0.55rem', padding: '2px 6px', border: 'none', borderRadius: '4px', fontWeight: 600, cursor: 'pointer' }}
                                 >
                                   Test Stripe Pay ($99)
                                 </button>
@@ -930,25 +945,25 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                         </div>
                       )}
 
-                      {/* PRESET B: KANBAN TASK BOARD */}
+                      {/* 3B. PRESET: CRM KANBAN BOARD */}
                       {templateStyle === 'task-board' && activeTab === 'dashboard' && (
                         <div>
                           {/* Kanban Columns */}
                           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
                             {['todo', 'progress', 'completed'].map(colName => (
                               <div key={colName} style={{ background: s.card, border: `1px solid ${s.border}`, borderRadius: '6px', padding: '6px', minHeight: '120px' }}>
-                                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: accent, textTransform: 'uppercase', marginBottom: '6px', borderBottom: `1px solid ${s.border}`, paddingBottom: '3px' }}>
+                                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: accent, textTransform: 'uppercase', marginBottom: '6px', borderBottom: `1px solid ${s.border}`, paddingBottom: '3px', textAlign: 'left' }}>
                                   {colName}
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                   {kanbanTasks.filter(t => t.column === colName).map(task => (
-                                    <div key={task.id} style={{ background: s.bg, border: `1px solid ${s.border}`, padding: '6px', borderRadius: '4px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                    <div key={task.id} style={{ background: s.bg, border: `1px solid ${s.border}`, padding: '6px', borderRadius: '4px', display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
                                       <div style={{ fontSize: '0.55rem', color: s.text, fontWeight: 500 }}>{task.title}</div>
                                       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '3px' }}>
                                         {colName === 'todo' && (
                                           <button 
                                             onClick={() => moveKanbanTask(task.id, 'progress')} 
-                                            style={{ backgroundColor: accent, color: 'white', padding: '1px 3px', borderRadius: '2px', fontSize: '0.45rem' }}
+                                            style={{ backgroundColor: accent, color: 'white', padding: '1px 4px', borderRadius: '2px', fontSize: '0.45rem', border: 'none', cursor: 'pointer' }}
                                           >
                                             Start
                                           </button>
@@ -956,7 +971,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                                         {colName === 'progress' && (
                                           <button 
                                             onClick={() => moveKanbanTask(task.id, 'completed')} 
-                                            style={{ backgroundColor: '#10b981', color: 'white', padding: '1px 3px', borderRadius: '2px', fontSize: '0.45rem' }}
+                                            style={{ backgroundColor: '#10b981', color: 'white', padding: '1px 4px', borderRadius: '2px', fontSize: '0.45rem', border: 'none', cursor: 'pointer' }}
                                           >
                                             Done
                                           </button>
@@ -978,20 +993,20 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                               onChange={(e) => setNewKanbanInput(e.target.value)}
                               style={{ flex: 1, padding: '3px 6px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
                             />
-                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '3px 8px', borderRadius: '4px', fontSize: '0.6rem' }}>
-                              Add
+                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '3px 8px', border: 'none', borderRadius: '4px', fontSize: '0.6rem', cursor: 'pointer' }}>
+                              Add Task
                             </button>
                           </form>
                         </div>
                       )}
 
-                      {/* PRESET C: COMMUNITY SOCIAL FEED */}
+                      {/* 3C. PRESET: COMMUNITY SOCIAL FEED */}
                       {templateStyle === 'community-feed' && activeTab === 'dashboard' && (
                         <div>
                           {/* Feed Posts */}
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '140px', overflowY: 'auto', marginBottom: '8px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '130px', overflowY: 'auto', marginBottom: '8px' }}>
                             {feedPosts.map(post => (
-                              <div key={post.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, display: 'flex', gap: '8px' }}>
+                              <div key={post.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, display: 'flex', gap: '8px', textAlign: 'left' }}>
                                 <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: accent, color: 'white', fontSize: '0.55rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800 }}>
                                   {post.avatar}
                                 </div>
@@ -1000,7 +1015,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                                     <span style={{ fontWeight: 700, fontSize: '0.6rem' }}>{post.author}</span>
                                     <button 
                                       onClick={() => handleLikePost(post.id)}
-                                      style={{ display: 'flex', alignItems: 'center', gap: '2px', color: post.liked ? '#f43f5e' : s.textMuted, fontSize: '0.55rem' }}
+                                      style={{ display: 'flex', alignItems: 'center', gap: '2px', color: post.liked ? '#f43f5e' : s.textMuted, fontSize: '0.55rem', background: 'none', border: 'none', cursor: 'pointer' }}
                                     >
                                       <Heart size={10} fill={post.liked ? '#f43f5e' : 'none'} /> {post.likes}
                                     </button>
@@ -1020,7 +1035,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                               onChange={(e) => setNewPostInput(e.target.value)}
                               style={{ flex: 1, padding: '4px 8px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
                             />
-                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.6rem', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px', fontSize: '0.6rem', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'pointer' }}>
                               <Send size={10} /> Send
                             </button>
                           </form>
@@ -1086,11 +1101,13 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             </div>
           )}
 
-          {/* MOCKUP CONTENT 4: RETAINER PORTAL (SUBSCRIPTIONS) */}
+          {/* ==================================================== */}
+          {/* MOCKUP CONTENT 4: RETAINER PORTAL (SUBSCRIPTIONS)    */}
+          {/* ==================================================== */}
           {billingModel === 'subscription' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               
-              {/* Portal Header */}
+              {/* Subscription Portal Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center', backgroundColor: s.card }}>
                 <div style={{ fontWeight: 800, fontSize: '0.8rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '4px', backgroundColor: accent }}></div>
@@ -1105,11 +1122,11 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
               {/* Retainer contents */}
               <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '10px' }}>
-                  <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
+                  <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'left' }}>
                     <div style={{ fontSize: '0.55rem', color: s.textMuted }}>Retainer Subscription Plan</div>
                     <div style={{ fontWeight: 800, fontSize: '0.75rem' }}>{packageId === 'starter-retainer' ? 'Care Support Plan' : 'Growth Developer Plan'}</div>
                   </div>
-                  <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
+                  <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'left' }}>
                     <div style={{ fontSize: '0.55rem', color: s.textMuted }}>Support Response SLA</div>
                     <div style={{ fontWeight: 800, fontSize: '0.75rem', color: accent }}>
                       {features.includes('seo-retainer') ? 'Advanced SLA Active' : 'Standard SLA'}
@@ -1154,8 +1171,8 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                       onChange={(e) => setNewTaskInput(e.target.value)}
                       style={{ flex: 1, padding: '4px 8px', fontSize: '0.65rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
                     />
-                    <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', borderRadius: '4px', fontWeight: 600, fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '2px' }}>
-                      <Plus size={10} /> Add
+                    <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px', fontWeight: 600, fontSize: '0.65rem', display: 'flex', alignItems: 'center', gap: '2px', cursor: 'pointer' }}>
+                      <Plus size={10} /> Add Task
                     </button>
                   </form>
                 </div>
@@ -1182,7 +1199,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                     <p style={{ fontSize: '0.65rem', color: s.textMuted, marginTop: '4px' }}>Demo order processed. Checkout completed successfully.</p>
                     <button 
                       onClick={() => setCheckoutStep('idle')}
-                      style={{ backgroundColor: accent, color: 'white', padding: '4px 12px', borderRadius: '4px', marginTop: '12px', fontSize: '0.65rem', fontWeight: 600 }}
+                      style={{ backgroundColor: accent, color: 'white', padding: '4px 12px', borderRadius: '4px', marginTop: '12px', fontSize: '0.65rem', fontWeight: 600, border: 'none', cursor: 'pointer' }}
                     >
                       Close Window
                     </button>
@@ -1197,7 +1214,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             <div style={{ position: 'absolute', top: 0, right: 0, width: '180px', bottom: 0, backgroundColor: s.bg, borderLeft: `1px solid ${s.border}`, padding: '12px', display: 'flex', flexDirection: 'column', zIndex: 9, boxShadow: '-5px 0 15px rgba(0,0,0,0.1)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: `1px solid ${s.border}`, paddingBottom: '6px', marginBottom: '8px', alignItems: 'center' }}>
                 <span style={{ fontWeight: 700, fontSize: '0.7rem' }}>Shopping Cart</span>
-                <button onClick={() => setShowCart(false)} style={{ fontSize: '0.6rem', color: s.textMuted }}>Close</button>
+                <button onClick={() => setShowCart(false)} style={{ fontSize: '0.6rem', color: s.textMuted, background: 'none', border: 'none', cursor: 'pointer' }}>Close</button>
               </div>
               
               <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '6px' }}>
@@ -1205,7 +1222,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   <div style={{ fontSize: '0.65rem', color: s.textMuted, fontStyle: 'italic', padding: '10px 0' }}>Cart is empty.</div>
                 ) : (
                   cart.map(item => (
-                    <div key={item.id} style={{ borderBottom: `1px solid ${s.border}`, paddingBottom: '4px' }}>
+                    <div key={item.id} style={{ borderBottom: `1px solid ${s.border}`, paddingBottom: '4px', textAlign: 'left' }}>
                       <div style={{ fontWeight: 600, fontSize: '0.65rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.6rem', color: s.textMuted, marginTop: '1px' }}>
                         <span>Qty: {item.qty}</span>
@@ -1224,7 +1241,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   </div>
                   <button 
                     onClick={triggerMockCheckout}
-                    style={{ backgroundColor: '#10b981', color: 'white', padding: '6px 0', borderRadius: '4px', width: '100%', fontSize: '0.65rem', fontWeight: 600 }}
+                    style={{ backgroundColor: '#10b981', color: 'white', padding: '6px 0', border: 'none', borderRadius: '4px', width: '100%', fontSize: '0.65rem', fontWeight: 600, cursor: 'pointer' }}
                   >
                     Checkout Stripe
                   </button>
@@ -1239,7 +1256,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
               <div style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: '10px', padding: '16px', width: '100%', maxWidth: '240px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                   <span style={{ fontWeight: 700, fontSize: '0.75rem' }}>Sign In to Workspace</span>
-                  <button onClick={() => { setShowAuthModal(false); setLoginError(false); }} style={{ fontSize: '0.6rem', color: s.textMuted }}>Close</button>
+                  <button onClick={() => { setShowAuthModal(false); setLoginError(false); }} style={{ fontSize: '0.6rem', color: s.textMuted, background: 'none', border: 'none', cursor: 'pointer' }}>Close</button>
                 </div>
                 
                 <form onSubmit={handleDemoLogin} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1263,7 +1280,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                     <span style={{ fontSize: '0.55rem', color: '#ef4444' }}>Invalid access credentials.</span>
                   )}
                   
-                  <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '5px 0', borderRadius: '4px', fontWeight: 600, fontSize: '0.65rem' }}>
+                  <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '5px 0', border: 'none', borderRadius: '4px', fontWeight: 600, fontSize: '0.65rem', cursor: 'pointer' }}>
                     Sign In
                   </button>
                 </form>
