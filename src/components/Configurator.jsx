@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Sparkles, Building, Layers, Check, RefreshCw, Shield, UserCheck, Zap, Clock } from 'lucide-react';
+import InteractivePreview from './InteractivePreview';
 
 export default function Configurator({ initialScope, onSaveScope, billingModel, currency, formatPrice }) {
   
@@ -160,7 +161,7 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
           Configure your service requirements. Estimate timelines, features, and pricing live before submitting your onboarding details.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', marginTop: '30px' }} className="configurator-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr 0.8fr', gap: '30px', marginTop: '30px' }} className="configurator-grid">
           
           {/* Controls Panel */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -395,8 +396,18 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
 
           </div>
 
+          {/* Interactive Preview Panel */}
+          <div className="preview-column" style={{ position: 'sticky', top: '100px', height: 'fit-content', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <InteractivePreview 
+              packageId={selectedPkgId} 
+              features={selectedFeatures} 
+              pagesCount={pages} 
+              billingModel={billingModel} 
+            />
+          </div>
+ 
           {/* Estimates Card Sidebar */}
-          <div style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
+          <div className="summary-column" style={{ position: 'sticky', top: '100px', height: 'fit-content' }}>
             <div className="glass-card" style={{ padding: '36px 30px', borderColor: 'rgba(99, 102, 241, 0.25)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
                 <RefreshCw size={18} color="var(--primary)" />
@@ -488,11 +499,41 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
       </div>
 
       <style dangerouslySetInnerHTML={{__html: `
+        @media (max-width: 1200px) {
+          .configurator-grid {
+            grid-template-columns: 1.2fr 0.8fr !important;
+            gap: 30px !important;
+          }
+          .preview-column {
+            grid-column: span 2 !important;
+            position: static !important;
+            order: 3 !important;
+          }
+          .summary-column {
+            grid-column: span 1 !important;
+            order: 2 !important;
+          }
+        }
         @media (max-width: 960px) {
           .configurator-grid {
             grid-template-columns: 1fr !important;
             gap: 40px !important;
           }
+          .preview-column {
+            grid-column: span 1 !important;
+            order: 2 !important;
+          }
+          .summary-column {
+            grid-column: span 1 !important;
+            order: 3 !important;
+          }
+        }
+        .addons-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        @media (max-width: 768px) {
           .addons-grid {
             grid-template-columns: 1fr !important;
           }
