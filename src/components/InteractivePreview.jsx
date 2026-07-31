@@ -13,6 +13,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
   
   // Custom Preset Styles
   const [templateStyle, setTemplateStyle] = useState(''); // SaaS, Minimalist, Portfolio, etc.
+  const [activeTab, setActiveTab] = useState('home');
   
   // Interactive feature states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,13 +63,17 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
   useEffect(() => {
     if (billingModel === 'subscription') {
       setTemplateStyle('retainer-portal');
+      setActiveTab('home');
     } else {
       if (packageId === 'landing-page') {
         setTemplateStyle('tech-saas');
+        setActiveTab('home');
       } else if (packageId === 'business-platform') {
         setTemplateStyle('corporate');
+        setActiveTab('home');
       } else {
         setTemplateStyle('dashboard');
+        setActiveTab('dashboard');
       }
     }
   }, [packageId, billingModel]);
