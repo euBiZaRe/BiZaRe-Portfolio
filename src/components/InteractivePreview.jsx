@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { 
   Moon, Sun, ShoppingCart, Lock, Unlock, Eye, Edit3, Save, 
   Trash2, Plus, Check, CheckCircle2, ChevronRight, BarChart2, 
-  Users, Settings, ArrowRight, CheckCircle, Mail, MessageSquare, AlertCircle
+  Users, Settings, ArrowRight, CheckCircle, Mail, MessageSquare, AlertCircle,
+  Heart, Play, Layers, Globe, Kanban, Sparkles, Send
 } from 'lucide-react';
 
 export default function InteractivePreview({ packageId, features, pagesCount, billingModel }) {
   // Mockup theme and color state
   const [theme, setTheme] = useState('dark'); // 'dark' | 'light'
   const [accent, setAccent] = useState('#7c3aed'); // Violet (default), Cyan, Emerald, Rose
+  
+  // Custom Preset Styles
+  const [templateStyle, setTemplateStyle] = useState(''); // SaaS, Minimalist, Portfolio, etc.
   
   // Interactive feature states
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -21,10 +25,10 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
   const [checkoutStep, setCheckoutStep] = useState('idle'); // idle, checking-out, completed
 
   const [cmsMode, setCmsMode] = useState(false);
-  const [editableHeroTitle, setEditableHeroTitle] = useState('We build next-generation software platforms');
-  const [editableSubtext, setEditableSubtext] = useState('High-performance, beautiful, conversion-focused websites.');
+  const [editableHeroTitle, setEditableHeroTitle] = useState('');
+  const [editableSubtext, setEditableSubtext] = useState('');
   
-  const [activeTab, setActiveTab] = useState('home'); // 'home', 'services', 'blog', 'contact' for websites; 'dashboard', 'analytics', 'users', 'settings' for web apps
+  const [activeTab, setActiveTab] = useState('home'); // subpage navigator
   
   // Contact form state
   const [contactName, setContactName] = useState('');
@@ -40,30 +44,71 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
   ]);
   const [newTaskInput, setNewTaskInput] = useState('');
 
-  // Reset demo states when packageId changes
+  // Preset 2 (Kanban Board) states
+  const [kanbanTasks, setKanbanTasks] = useState([
+    { id: 'k1', title: 'Design landing page mockup', column: 'todo' },
+    { id: 'k2', title: 'Integrate Stripe gateway checkout', column: 'todo' },
+    { id: 'k3', title: 'Connect user database schema', column: 'progress' },
+    { id: 'k4', title: 'Setup Google analytics tracking', column: 'completed' }
+  ]);
+  const [newKanbanInput, setNewKanbanInput] = useState('');
+
+  // Preset 3 (Social Community Feed) states
+  const [feedPosts, setFeedPosts] = useState([
+    { id: 'f1', author: 'Matty Roberts', avatar: 'MR', content: 'Just deployed the new telemetry dashboard for GRiD UP Sim Racing! The speed dials are rendering at 60fps.', likes: 12, liked: false },
+    { id: 'f2', author: 'Alex Cortez', avatar: 'AC', content: 'Loving the custom ecommerce checkout template. Smooth Stripe transitions.', likes: 7, liked: false }
+  ]);
+  const [newPostInput, setNewPostInput] = useState('');
+
+  // Auto-set preset options when package changes
   useEffect(() => {
-    setIsLoggedIn(false);
-    setShowAuthModal(false);
-    setCart([]);
-    setShowCart(false);
-    setCheckoutStep('idle');
+    if (billingModel === 'subscription') {
+      setTemplateStyle('retainer-portal');
+    } else {
+      if (packageId === 'landing-page') {
+        setTemplateStyle('tech-saas');
+      } else if (packageId === 'business-platform') {
+        setTemplateStyle('corporate');
+      } else {
+        setTemplateStyle('dashboard');
+      }
+    }
+  }, [packageId, billingModel]);
+
+  // Sync default texts when templateStyle changes
+  useEffect(() => {
     setCmsMode(false);
-    setActiveTab('home');
     setContactSubmitted(false);
-    setNewTaskInput('');
     
-    // Set default package hero titles
-    if (packageId === 'landing-page') {
-      setEditableHeroTitle('Launch Your Startup Instantly');
+    if (templateStyle === 'tech-saas') {
+      setEditableHeroTitle('Launch Your Tech Startup');
       setEditableSubtext('A beautiful, conversion-optimized landing page for your brand.');
-    } else if (packageId === 'business-platform') {
+    } else if (templateStyle === 'minimal-product') {
+      setEditableHeroTitle('The Creative Notebook');
+      setEditableSubtext('A premium, hand-crafted space for designers, writers, and developer thoughts.');
+    } else if (templateStyle === 'creative-portfolio') {
+      setEditableHeroTitle('Matty Roberts — Interactive Engineer');
+      setEditableSubtext('Building high-performance frontend interfaces and sim racing portals.');
+    } else if (templateStyle === 'corporate') {
       setEditableHeroTitle('Grow Your Business Online');
       setEditableSubtext('Professional multi-page platform with full CMS integration.');
-    } else {
-      setEditableHeroTitle('Interactive Enterprise Portal');
-      setEditableSubtext('SaaS dashboard with full database, roles and security integrations.');
+    } else if (templateStyle === 'storefront') {
+      setEditableHeroTitle('Apex Shop Products');
+      setEditableSubtext('Secure payment integrations and smooth transaction carts.');
+    } else if (templateStyle === 'blog-hub') {
+      setEditableHeroTitle('Apex Content Hub');
+      setEditableSubtext('Dynamic database feeds indexing corporate technical insights.');
+    } else if (templateStyle === 'dashboard') {
+      setEditableHeroTitle('SaaS Portal Dashboard');
+      setEditableSubtext('Overview of your application event metrics and revenue stats.');
+    } else if (templateStyle === 'task-board') {
+      setEditableHeroTitle('SaaS Project Roadmap');
+      setEditableSubtext('Manage development queues in real-time.');
+    } else if (templateStyle === 'community-feed') {
+      setEditableHeroTitle('SaaS Community Feed');
+      setEditableSubtext('Interactive forum for community platform users.');
     }
-  }, [packageId]);
+  }, [templateStyle]);
 
   // Color options
   const colorOptions = [
@@ -100,7 +145,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
 
   const s = getThemeStyles();
 
-  // Handle adding item to e-commerce cart
+  // E-commerce cart logic
   const handleAddToCart = (item) => {
     if (cart.some(i => i.id === item.id)) {
       setCart(cart.map(i => i.id === item.id ? { ...i, qty: i.qty + 1 } : i));
@@ -110,7 +155,6 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
     setShowCart(true);
   };
 
-  // Handle mock checkout
   const triggerMockCheckout = () => {
     setCheckoutStep('checking-out');
     setTimeout(() => {
@@ -119,7 +163,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
     }, 1500);
   };
 
-  // Handle submitting contact form
+  // Contact form logic
   const handleContactSubmit = (e) => {
     e.preventDefault();
     if (contactName && contactEmail) {
@@ -133,7 +177,55 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
     }
   };
 
-  // Handle adding task to subscription backlog
+  // Kanban task movement logic
+  const moveKanbanTask = (taskId, targetColumn) => {
+    setKanbanTasks(kanbanTasks.map(t => t.id === taskId ? { ...t, column: targetColumn } : t));
+  };
+
+  const handleAddKanbanTask = (e) => {
+    e.preventDefault();
+    if (newKanbanInput.trim()) {
+      setKanbanTasks([
+        ...kanbanTasks,
+        { id: `k-${Date.now()}`, title: newKanbanInput.trim(), column: 'todo' }
+      ]);
+      setNewKanbanInput('');
+    }
+  };
+
+  // Social feed logic
+  const handleLikePost = (postId) => {
+    setFeedPosts(feedPosts.map(p => {
+      if (p.id === postId) {
+        return {
+          ...p,
+          likes: p.liked ? p.likes - 1 : p.likes + 1,
+          liked: !p.liked
+        };
+      }
+      return p;
+    }));
+  };
+
+  const handleCreatePost = (e) => {
+    e.preventDefault();
+    if (newPostInput.trim()) {
+      setFeedPosts([
+        ...feedPosts,
+        {
+          id: `f-${Date.now()}`,
+          author: isLoggedIn ? 'matty_dev' : 'Guest User',
+          avatar: isLoggedIn ? 'MD' : 'GU',
+          content: newPostInput.trim(),
+          likes: 0,
+          liked: false
+        }
+      ]);
+      setNewPostInput('');
+    }
+  };
+
+  // Retainer portal backlog logic
   const handleAddTask = (e) => {
     e.preventDefault();
     if (newTaskInput.trim()) {
@@ -147,14 +239,36 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
 
   const handleDemoLogin = (e) => {
     e.preventDefault();
-    if (passwordInput === 'demo123' || passwordInput.trim() !== '') {
-      setIsLoggedIn(true);
-      setShowAuthModal(false);
-      setLoginError(false);
-      setPasswordInput('');
-    } else {
-      setLoginError(true);
+    setIsLoggedIn(true);
+    setShowAuthModal(false);
+    setPasswordInput('');
+  };
+
+  // Preset options based on active package selection
+  const getPresetOptions = () => {
+    if (billingModel === 'subscription') {
+      return [{ id: 'retainer-portal', name: 'Retainer Backlog' }];
     }
+    if (packageId === 'landing-page') {
+      return [
+        { id: 'tech-saas', name: 'Modern SaaS App' },
+        { id: 'minimal-product', name: 'Minimalist E-Book' },
+        { id: 'creative-portfolio', name: 'Creative Portfolio' }
+      ];
+    }
+    if (packageId === 'business-platform') {
+      return [
+        { id: 'corporate', name: 'Clean Corporate' },
+        { id: 'storefront', name: 'E-Commerce Store' },
+        { id: 'blog-hub', name: 'Tech Blog Hub' }
+      ];
+    }
+    // Custom applications
+    return [
+      { id: 'dashboard', name: 'Metrics Dashboard' },
+      { id: 'task-board', name: 'Kanban Roadmaps' },
+      { id: 'community-feed', name: 'Community Forum' }
+    ];
   };
 
   return (
@@ -162,17 +276,41 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
       
       {/* Interactive Controls Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.08)', paddingBottom: '16px', flexWrap: 'wrap', gap: '12px' }}>
-        <div>
-          <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--secondary)', fontWeight: 700 }}>
-            Mockup Dashboard
-          </span>
-          <h4 style={{ fontSize: '1rem', color: 'white', fontWeight: 600 }}>Interactive Template Preview</h4>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div>
+            <span style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--secondary)', fontWeight: 700 }}>
+              Live Mockup Preview
+            </span>
+            {/* Template Preset Dropdown */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '2px' }}>
+              <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Template Style:</span>
+              <select
+                value={templateStyle}
+                onChange={(e) => setTemplateStyle(e.target.value)}
+                style={{
+                  fontSize: '0.7rem',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  color: 'white',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '4px',
+                  padding: '2px 8px',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  outline: 'none'
+                }}
+              >
+                {getPresetOptions().map(opt => (
+                  <option key={opt.id} value={opt.id} style={{ backgroundColor: '#18181b', color: 'white' }}>
+                    {opt.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
         
-        {/* Customization Options */}
+        {/* Theme and Color Selectors */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          
-          {/* Accent Color Circle Selector */}
           <div style={{ display: 'flex', gap: '6px' }}>
             {colorOptions.map(col => (
               <button
@@ -193,7 +331,6 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             ))}
           </div>
 
-          {/* Theme Toggle Button */}
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             style={{
@@ -207,7 +344,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
               alignItems: 'center',
               justifyContent: 'center'
             }}
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}
           >
             {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} color="#09090b" />}
           </button>
@@ -224,7 +361,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
         transition: 'all 0.3s ease'
       }}>
         
-        {/* Browser Top Header */}
+        {/* Browser URL Bar */}
         <div style={{
           backgroundColor: theme === 'dark' ? '#18181b' : '#e5e7eb',
           padding: '10px 16px',
@@ -233,14 +370,12 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
           gap: '12px',
           borderBottom: `1px solid ${s.border}`
         }}>
-          {/* macOS window controls dots */}
           <div style={{ display: 'flex', gap: '6px' }}>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block' }}></span>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#eab308', display: 'inline-block' }}></span>
             <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#22c55e', display: 'inline-block' }}></span>
           </div>
 
-          {/* Browser Address URL Bar */}
           <div style={{
             flex: 1,
             backgroundColor: theme === 'dark' ? '#27272a' : '#ffffff',
@@ -257,10 +392,9 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             border: theme === 'dark' ? 'none' : '1px solid #d1d5db'
           }}>
             <span style={{ opacity: 0.5 }}>https://</span>
-            <span>preview.bizare.shop/{packageId || 'custom-app'}</span>
+            <span>preview.bizare.shop/{templateStyle || 'custom-app'}</span>
           </div>
           
-          {/* Indicators */}
           <div style={{ display: 'flex', gap: '4px' }}>
             {features.includes('cms') && (
               <span 
@@ -300,14 +434,15 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
           fontFamily: 'system-ui, sans-serif'
         }}>
 
-          {/* MOCKUP CONTENT 1: FIXED PROJECT LANDING PAGE */}
+          {/* PACKAGE 1: LANDING PAGE PRESETS */}
           {packageId === 'landing-page' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              {/* Landing Page Navbar */}
+              
+              {/* Core Landing Page Header Navbar */}
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center' }}>
                 <div style={{ fontWeight: 800, fontSize: '0.9rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: accent }}></div>
-                  <span>LaunchPad</span>
+                  <span>{templateStyle === 'minimal-product' ? 'MinimalSpace' : templateStyle === 'creative-portfolio' ? 'Matty.R' : 'SaaSify'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
                   <span style={{ color: s.textMuted, fontSize: '0.7rem' }}>Features</span>
@@ -330,8 +465,9 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                 </div>
               </div>
 
-              {/* Landing Page Hero */}
+              {/* Layout Content depending on style */}
               <div style={{ padding: '32px 16px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+                
                 {/* Floating decor particles if Motion is selected */}
                 {features.includes('motion') && (
                   <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, pointerEvents: 'none' }}>
@@ -339,7 +475,8 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                     <div style={{ position: 'absolute', width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#06b6d4', opacity: 0.1, bottom: '20%', right: '15%', animation: 'float 8s infinite ease-in-out' }}></div>
                   </div>
                 )}
-                
+
+                {/* Theme Tag */}
                 <span style={{ 
                   backgroundColor: `rgba(${accent === '#7c3aed' ? '124,58,237' : accent === '#06b6d4' ? '6,182,212' : accent === '#10b981' ? '16,185,129' : '244,63,94'}, 0.1)`, 
                   color: accent, 
@@ -350,9 +487,12 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   textTransform: 'uppercase',
                   letterSpacing: '0.05em'
                 }}>
-                  Interactive Preview
+                  {templateStyle === 'tech-saas' && 'SaaS Product Template'}
+                  {templateStyle === 'minimal-product' && 'Minimal E-Book Template'}
+                  {templateStyle === 'creative-portfolio' && 'Interactive Portfolio'}
                 </span>
 
+                {/* Editable Area */}
                 {cmsMode ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '380px', margin: '12px auto' }}>
                     <input 
@@ -370,7 +510,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   </div>
                 ) : (
                   <>
-                    <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: s.text, marginTop: '8px', lineHeight: 1.2 }}>
+                    <h1 style={{ fontSize: '1.45rem', fontWeight: 800, color: s.text, marginTop: '8px', lineHeight: 1.2, maxWidth: '400px', marginLeft: 'auto', marginRight: 'auto' }}>
                       {editableHeroTitle}
                     </h1>
                     <p style={{ fontSize: '0.75rem', color: s.textMuted, marginTop: '8px', maxWidth: '360px', marginLeft: 'auto', marginRight: 'auto' }}>
@@ -379,58 +519,96 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   </>
                 )}
 
-                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '16px' }}>
-                  {features.includes('stripe') ? (
-                    <button 
-                      onClick={() => handleAddToCart({ id: 'lp-base', name: 'Startup License', price: 29 })}
-                      style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}
-                    >
-                      <ShoppingCart size={12} />
-                      Buy Now — $29
-                    </button>
-                  ) : (
-                    <button style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600 }}>
-                      Get Started Free
-                    </button>
-                  )}
-                  <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '6px' }}>
-                    Watch Demo
-                  </button>
-                </div>
-              </div>
-
-              {/* Simple Features Grid */}
-              <div style={{ padding: '16px', borderTop: `1px solid ${s.border}`, backgroundColor: s.card }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-                  {[
-                    { title: 'Lightning Fast', desc: '99+ PageSpeed score guarantees retention.' },
-                    { title: 'Responsive', desc: 'Perfect rendering on all mobile viewports.' },
-                    { title: 'SEO Ready', desc: 'Pre-indexed layout structures.' }
-                  ].map((feat, idx) => (
-                    <div key={idx} style={{ padding: '10px', borderRadius: '6px', border: `1px solid ${s.border}`, backgroundColor: s.bg }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.75rem', color: s.text, marginBottom: '2px' }}>{feat.title}</div>
-                      <div style={{ fontSize: '0.65rem', color: s.textMuted }}>{feat.desc}</div>
+                {/* Template Preset Specific Widgets */}
+                {templateStyle === 'tech-saas' && (
+                  <div style={{ marginTop: '16px' }}>
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }}>
+                      {features.includes('stripe') ? (
+                        <button 
+                          onClick={() => handleAddToCart({ id: 'lp-saas', name: 'SaaS License', price: 49 })}
+                          style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}
+                        >
+                          <ShoppingCart size={12} /> Buy Plan — $49
+                        </button>
+                      ) : (
+                        <button style={{ backgroundColor: accent, color: 'white', padding: '6px 14px', borderRadius: '6px', fontWeight: 600 }}>
+                          Start Free Trial
+                        </button>
+                      )}
+                      <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '6px' }}>
+                        View Features
+                      </button>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
+
+                {templateStyle === 'minimal-product' && (
+                  <div style={{ marginTop: '16px', maxWidth: '280px', margin: '16px auto 0' }}>
+                    <div style={{ border: `1px solid ${s.border}`, padding: '14px', borderRadius: '8px', background: s.card, textAlign: 'left' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '8px' }}>
+                        <span style={{ fontSize: '0.8rem', fontWeight: 700 }}>E-Book PDF Bundle</span>
+                        <span style={{ fontSize: '1rem', fontWeight: 800, color: accent }}>$19.00</span>
+                      </div>
+                      <input 
+                        type="email" 
+                        placeholder="Enter email to purchase..." 
+                        style={{ width: '100%', padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.bg, color: s.text, marginBottom: '6px' }}
+                      />
+                      {features.includes('stripe') ? (
+                        <button 
+                          onClick={() => handleAddToCart({ id: 'lp-book', name: 'Minimal E-Book PDF', price: 19 })}
+                          style={{ backgroundColor: accent, color: 'white', width: '100%', padding: '4px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}
+                        >
+                          Checkout with Stripe
+                        </button>
+                      ) : (
+                        <button style={{ backgroundColor: accent, color: 'white', width: '100%', padding: '4px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600 }}>
+                          Subscribe Newsletter
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {templateStyle === 'creative-portfolio' && (
+                  <div style={{ marginTop: '16px' }}>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                      <button style={{ backgroundColor: accent, color: 'white', padding: '6px 12px', borderRadius: '6px', fontWeight: 600 }}>
+                        View Creative Works
+                      </button>
+                      <button style={{ border: `1px solid ${s.border}`, color: s.text, padding: '6px 12px', borderRadius: '6px' }}>
+                        Read Resume
+                      </button>
+                    </div>
+                    {/* Tiny visual grids */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginTop: '20px', maxWidth: '340px', margin: '20px auto 0' }}>
+                      {['⚡ Fast Rendering', '🎨 Custom Design', '🛠️ React Architect'].map((label, idx) => (
+                        <div key={idx} style={{ padding: '6px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, fontSize: '0.6rem', fontWeight: 600 }}>
+                          {label}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
               </div>
             </div>
           )}
 
-          {/* MOCKUP CONTENT 2: FIXED PROJECT BUSINESS WEBSITE */}
+          {/* PACKAGE 2: BUSINESS WEBSITE PRESETS */}
           {packageId === 'business-platform' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              {/* Business Navbar */}
+              
+              {/* Business Header Navbar */}
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center', backgroundColor: s.card }}>
                 <div style={{ fontWeight: 800, fontSize: '0.85rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '4px', backgroundColor: accent }}></div>
-                  <span>ApexCorp</span>
+                  <span>{templateStyle === 'storefront' ? 'ApexShop' : templateStyle === 'blog-hub' ? 'TechFlow' : 'ApexCorp'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
                   {[
                     { id: 'home', name: 'Home' },
-                    { id: 'services', name: 'Services' },
-                    { id: 'blog', name: 'Blog' },
+                    { id: 'services', name: templateStyle === 'storefront' ? 'Shop' : templateStyle === 'blog-hub' ? 'Feed' : 'Services' },
                     { id: 'contact', name: 'Contact' }
                   ].map(tab => (
                     <span 
@@ -462,7 +640,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                 </div>
               </div>
 
-              {/* Sub Pages display */}
+              {/* Sub-Pages based on Tab */}
               <div style={{ flex: 1, padding: '16px' }}>
                 
                 {/* 1. Home Tab */}
@@ -473,80 +651,109 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                       <p style={{ fontSize: '0.7rem', color: s.textMuted }}>{editableSubtext}</p>
                     </div>
 
-                    <div style={{ background: s.card, borderRadius: '8px', padding: '12px', border: `1px solid ${s.border}`, marginBottom: '12px' }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.75rem', marginBottom: '4px' }}>Welcome to ApexCorp Digital Platform</div>
+                    <div style={{ background: s.card, borderRadius: '8px', padding: '12px', border: `1px solid ${s.border}` }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.75rem', marginBottom: '4px' }}>
+                        {templateStyle === 'storefront' ? 'Secure Storefront Dashboard' : 'Professional Solution Platform'}
+                      </div>
                       <p style={{ fontSize: '0.65rem', color: s.textMuted }}>
-                        This multi-page platform handles service listings, client inquiries, and custom blog postings. Fully integrated with standard search indexes.
+                        This multi-page layout demonstrates standard headers, responsive grids, and customizable color schemes.
                       </p>
                       <div style={{ marginTop: '8px', fontSize: '0.65rem', color: accent, fontWeight: 700 }}>
-                        ⚙️ configured with {pagesCount} core pages.
+                        ⚙️ currently displays {pagesCount} active pages.
                       </div>
                     </div>
                   </div>
                 )}
 
-                {/* 2. Services Tab */}
+                {/* 2. Services / Shop Tab */}
                 {activeTab === 'services' && (
                   <div>
-                    <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Professional Solutions</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                      {[
-                        { name: 'Core Strategy Consulting', desc: 'Corporate roadmap planning and execution.' },
-                        { name: 'Full-Stack Development', desc: 'Secure web interfaces and pipelines.' }
-                      ].map((srv, idx) => (
-                        <div key={idx} style={{ padding: '10px', borderRadius: '6px', border: `1px solid ${s.border}`, backgroundColor: s.card }}>
-                          <div style={{ fontWeight: 700, fontSize: '0.7rem', color: s.text }}>{srv.name}</div>
-                          <p style={{ fontSize: '0.6rem', color: s.textMuted, marginTop: '2px' }}>{srv.desc}</p>
-                          {features.includes('stripe') && (
-                            <button 
-                              onClick={() => handleAddToCart({ id: `service-${idx}`, name: srv.name, price: 199 })}
-                              style={{ border: `1px solid ${accent}`, color: accent, fontSize: '0.6rem', padding: '2px 6px', borderRadius: '4px', marginTop: '6px', fontWeight: 600 }}
-                            >
-                              Add to Plan ($199)
-                            </button>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* 3. Blog Tab */}
-                {activeTab === 'blog' && (
-                  <div>
-                    <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Dynamic Company Insights</h3>
-                    {features.includes('database') || features.includes('cms') ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        {[
-                          { title: 'Scaling Enterprise Cloud Architectures', date: 'July 28, 2026', read: '5 min read' },
-                          { title: 'The Future of Conversion Optimization', date: 'July 15, 2026', read: '3 min read' }
-                        ].map((post, idx) => (
-                          <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
-                            <div>
-                              <div style={{ fontWeight: 700, fontSize: '0.7rem', color: s.text }}>{post.title}</div>
-                              <span style={{ fontSize: '0.6rem', color: s.textMuted }}>{post.date}</span>
+                    {/* A. Corporate Preset Services */}
+                    {templateStyle === 'corporate' && (
+                      <div>
+                        <h3 style={{ fontSize: '0.9rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Professional Solutions</h3>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                          {[
+                            { name: 'Corporate Consulting', desc: 'Enterprise scaling strategy audits.' },
+                            { name: 'Software Development', desc: 'Secure database pipelines & Web APIs.' }
+                          ].map((srv, idx) => (
+                            <div key={idx} style={{ padding: '10px', borderRadius: '6px', border: `1px solid ${s.border}`, backgroundColor: s.card }}>
+                              <div style={{ fontWeight: 700, fontSize: '0.7rem', color: s.text }}>{srv.name}</div>
+                              <p style={{ fontSize: '0.6rem', color: s.textMuted, marginTop: '2px' }}>{srv.desc}</p>
                             </div>
-                            <span style={{ fontSize: '0.6rem', color: accent, alignSelf: 'center', fontWeight: 600 }}>{post.read}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div style={{ padding: '20px', textAlign: 'center', border: `1px dashed ${s.border}`, borderRadius: '8px' }}>
-                        <AlertCircle size={16} color={accent} style={{ marginBottom: '4px' }} />
-                        <div style={{ fontSize: '0.7rem', color: s.textMuted }}>Blog feeds require the 'Secure Database Integration' add-on to load dynamic articles.</div>
+                          ))}
+                        </div>
                       </div>
                     )}
+
+                    {/* B. Storefront Preset Shop catalog */}
+                    {templateStyle === 'storefront' && (
+                      <div>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>E-Commerce Catalog</h3>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                          {[
+                            { id: 'p1', name: 'Desk Dock', price: 89 },
+                            { id: 'p2', name: 'Keyboard', price: 120 },
+                            { id: 'p3', name: 'Office Chair', price: 299 }
+                          ].map(prod => (
+                            <div key={prod.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, textAlign: 'center' }}>
+                              <div style={{ fontWeight: 700, fontSize: '0.65rem', color: s.text, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{prod.name}</div>
+                              <div style={{ fontSize: '0.7rem', color: accent, fontWeight: 700, margin: '2px 0 6px' }}>${prod.price}</div>
+                              
+                              {features.includes('stripe') ? (
+                                <button 
+                                  onClick={() => handleAddToCart(prod)}
+                                  style={{ backgroundColor: accent, color: 'white', fontSize: '0.55rem', padding: '2px 4px', borderRadius: '3px', width: '100%', fontWeight: 600 }}
+                                >
+                                  Add to Cart
+                                </button>
+                              ) : (
+                                <button style={{ border: `1px solid ${s.border}`, color: s.text, fontSize: '0.55rem', padding: '2px 4px', borderRadius: '3px', width: '100%' }}>
+                                  Out of Stock
+                                </button>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* C. Blog Hub Preset Feed */}
+                    {templateStyle === 'blog-hub' && (
+                      <div>
+                        <h3 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '8px', color: s.text }}>Technical Articles Feed</h3>
+                        {features.includes('database') || features.includes('cms') ? (
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            {[
+                              { title: 'Scaling Cloud Architectures in 2026', date: 'July 28' },
+                              { title: 'Designing High-Performance Frontend APIs', date: 'July 15' }
+                            ].map((art, idx) => (
+                              <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
+                                <span style={{ fontWeight: 600, fontSize: '0.65rem', color: s.text }}>{art.title}</span>
+                                <span style={{ fontSize: '0.55rem', color: accent }}>{art.date}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div style={{ padding: '16px', textAlign: 'center', border: `1px dashed ${s.border}`, borderRadius: '8px' }}>
+                            <AlertCircle size={14} color={accent} style={{ marginBottom: '4px' }} />
+                            <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Database Integration is required to feed dynamic articles here.</div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                   </div>
                 )}
 
-                {/* 4. Contact Tab */}
+                {/* 3. Contact Tab */}
                 {activeTab === 'contact' && (
                   <div>
                     {contactSubmitted ? (
                       <div style={{ textAlign: 'center', padding: '20px', background: 'rgba(16, 185, 129, 0.05)', border: '1px solid #10b981', borderRadius: '8px' }}>
                         <CheckCircle size={20} color="#10b981" style={{ margin: '0 auto 6px' }} />
-                        <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#10b981' }}>Message Sent Successfully!</div>
-                        <div style={{ fontSize: '0.65rem', color: s.textMuted, marginTop: '2px' }}>We will contact you shortly at your provided email.</div>
+                        <div style={{ fontWeight: 700, fontSize: '0.75rem', color: '#10b981' }}>Message Received!</div>
+                        <p style={{ fontSize: '0.65rem', color: s.textMuted, marginTop: '2px' }}>We will contact you shortly.</p>
                       </div>
                     ) : (
                       <form onSubmit={handleContactSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '280px', margin: '0 auto' }}>
@@ -574,7 +781,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                           style={{ padding: '4px 8px', fontSize: '0.7rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text, resize: 'none' }}
                         />
                         <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', borderRadius: '4px', fontWeight: 600, fontSize: '0.7rem' }}>
-                          Send Message
+                          Submit Form
                         </button>
                       </form>
                     )}
@@ -585,18 +792,18 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             </div>
           )}
 
-          {/* MOCKUP CONTENT 3: FIXED PROJECT CUSTOM WEB APP (SaaS Dashboard) */}
+          {/* PACKAGE 3: CUSTOM WEB APP PRESETS (Dashboard, Kanban, Social Feed) */}
           {packageId === 'custom-application' && (
             <div style={{ display: 'flex', height: '100%' }}>
               
-              {/* SaaS Sidebar */}
+              {/* Sidebar */}
               <div style={{ width: '80px', backgroundColor: s.card, borderRight: `1px solid ${s.border}`, display: 'flex', flexDirection: 'column', padding: '8px', gap: '12px' }}>
                 <div style={{ fontWeight: 800, fontSize: '0.75rem', color: s.text, textAlign: 'center', marginBottom: '8px', paddingBottom: '8px', borderBottom: `1px solid ${s.border}` }}>
                   SaaS.io
                 </div>
                 {[
-                  { id: 'dashboard', label: 'Overview', icon: <BarChart2 size={12} /> },
-                  { id: 'users', label: 'Users', icon: <Users size={12} /> },
+                  { id: 'dashboard', label: 'Dashboard', icon: <BarChart2 size={12} /> },
+                  { id: 'users', label: 'Admin Board', icon: <Users size={12} /> },
                   { id: 'settings', label: 'Settings', icon: <Settings size={12} /> }
                 ].map(item => (
                   <button 
@@ -617,17 +824,18 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                 ))}
               </div>
 
-              {/* SaaS Dashboard Viewport */}
+              {/* Viewport content */}
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                {/* Dashboard Header */}
+                
+                {/* Header */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center', backgroundColor: s.bg }}>
                   <div style={{ fontWeight: 700, fontSize: '0.75rem' }}>
-                    {activeTab === 'dashboard' && 'Analytics Overview'}
-                    {activeTab === 'users' && 'User Management'}
-                    {activeTab === 'settings' && 'System Config'}
+                    {templateStyle === 'dashboard' && 'Analytics Overviews'}
+                    {templateStyle === 'task-board' && 'CRM Kanban Board'}
+                    {templateStyle === 'community-feed' && 'Public Forum Board'}
                   </div>
                   
-                  {/* Auth indicator */}
+                  {/* Auth Indicator */}
                   <div>
                     {features.includes('auth') ? (
                       isLoggedIn ? (
@@ -641,20 +849,19 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                           onClick={() => setShowAuthModal(true)} 
                           style={{ border: `1px solid ${accent}`, color: accent, fontSize: '0.65rem', padding: '3px 8px', borderRadius: '4px', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: 600 }}
                         >
-                          <Lock size={10} />
-                          Unlock Portal
+                          <Lock size={10} /> Lock Screen
                         </button>
                       )
                     ) : (
-                      <span style={{ fontSize: '0.65rem', color: s.textMuted }}>No-Auth Access</span>
+                      <span style={{ fontSize: '0.65rem', color: s.textMuted }}>No-Auth Portal</span>
                     )}
                   </div>
                 </div>
 
-                {/* Dashboard Tab Content */}
+                {/* Dashboard Tab Contents */}
                 <div style={{ flex: 1, padding: '12px', overflowY: 'auto' }}>
                   
-                  {/* Lock Screen simulation for Custom Apps with Auth */}
+                  {/* Lock Screen overlay */}
                   {features.includes('auth') && !isLoggedIn ? (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '80%', textAlign: 'center', gap: '10px' }}>
                       <Lock size={20} color={accent} style={{ opacity: 0.8 }} />
@@ -671,25 +878,24 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                     </div>
                   ) : (
                     <>
-                      {/* 1. Dashboard Overview */}
-                      {activeTab === 'dashboard' && (
+                      {/* PRESET A: ANALYTICS DASHBOARD */}
+                      {templateStyle === 'dashboard' && activeTab === 'dashboard' && (
                         <div>
-                          {/* Mini widgets */}
+                          {/* Mini stats widgets */}
                           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px', marginBottom: '12px' }}>
                             {[
-                              { label: 'Weekly Revenue', val: '$14.2k', change: '+12%' },
-                              { label: 'Total Signups', val: '1,849', change: '+24%' },
-                              { label: 'DB Speed SLA', val: '24ms', change: '99.9%' }
+                              { label: 'Revenue', val: '$14.2k' },
+                              { label: 'Signups', val: '1,849' },
+                              { label: 'SLA Speed', val: '24ms' }
                             ].map((w, idx) => (
                               <div key={idx} style={{ padding: '6px 8px', borderRadius: '6px', border: `1px solid ${s.border}`, background: s.card }}>
                                 <div style={{ fontSize: '0.55rem', color: s.textMuted }}>{w.label}</div>
                                 <div style={{ fontWeight: 800, fontSize: '0.75rem', color: idx === 0 ? accent : s.text }}>{w.val}</div>
-                                <div style={{ fontSize: '0.5rem', color: '#10b981' }}>{w.change}</div>
                               </div>
                             ))}
                           </div>
 
-                          {/* Interactive Bar Chart using CSS grid */}
+                          {/* CSS graph */}
                           <div style={{ border: `1px solid ${s.border}`, borderRadius: '6px', padding: '10px', background: s.card }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                               <span style={{ fontSize: '0.6rem', fontWeight: 700 }}>Conversion Rates (2026)</span>
@@ -704,10 +910,8 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                                     height: `${h}%`, 
                                     backgroundColor: i === 5 ? accent : 'rgba(255,255,255,0.05)', 
                                     border: `1px solid ${i === 5 ? accent : s.border}`,
-                                    borderRadius: '3px 3px 0 0',
-                                    position: 'relative'
+                                    borderRadius: '3px 3px 0 0'
                                   }}
-                                  title={`Month ${i+1}: ${h}%`}
                                 />
                               ))}
                             </div>
@@ -726,7 +930,104 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                         </div>
                       )}
 
-                      {/* 2. Users Management Tab */}
+                      {/* PRESET B: KANBAN TASK BOARD */}
+                      {templateStyle === 'task-board' && activeTab === 'dashboard' && (
+                        <div>
+                          {/* Kanban Columns */}
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                            {['todo', 'progress', 'completed'].map(colName => (
+                              <div key={colName} style={{ background: s.card, border: `1px solid ${s.border}`, borderRadius: '6px', padding: '6px', minHeight: '120px' }}>
+                                <div style={{ fontSize: '0.55rem', fontWeight: 800, color: accent, textTransform: 'uppercase', marginBottom: '6px', borderBottom: `1px solid ${s.border}`, paddingBottom: '3px' }}>
+                                  {colName}
+                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                  {kanbanTasks.filter(t => t.column === colName).map(task => (
+                                    <div key={task.id} style={{ background: s.bg, border: `1px solid ${s.border}`, padding: '6px', borderRadius: '4px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                      <div style={{ fontSize: '0.55rem', color: s.text, fontWeight: 500 }}>{task.title}</div>
+                                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '3px' }}>
+                                        {colName === 'todo' && (
+                                          <button 
+                                            onClick={() => moveKanbanTask(task.id, 'progress')} 
+                                            style={{ backgroundColor: accent, color: 'white', padding: '1px 3px', borderRadius: '2px', fontSize: '0.45rem' }}
+                                          >
+                                            Start
+                                          </button>
+                                        )}
+                                        {colName === 'progress' && (
+                                          <button 
+                                            onClick={() => moveKanbanTask(task.id, 'completed')} 
+                                            style={{ backgroundColor: '#10b981', color: 'white', padding: '1px 3px', borderRadius: '2px', fontSize: '0.45rem' }}
+                                          >
+                                            Done
+                                          </button>
+                                        )}
+                                      </div>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          
+                          {/* Add Kanban Task Form */}
+                          <form onSubmit={handleAddKanbanTask} style={{ display: 'flex', gap: '4px', marginTop: '10px' }}>
+                            <input 
+                              type="text" 
+                              placeholder="New roadmap task..." 
+                              value={newKanbanInput}
+                              onChange={(e) => setNewKanbanInput(e.target.value)}
+                              style={{ flex: 1, padding: '3px 6px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
+                            />
+                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '3px 8px', borderRadius: '4px', fontSize: '0.6rem' }}>
+                              Add
+                            </button>
+                          </form>
+                        </div>
+                      )}
+
+                      {/* PRESET C: COMMUNITY SOCIAL FEED */}
+                      {templateStyle === 'community-feed' && activeTab === 'dashboard' && (
+                        <div>
+                          {/* Feed Posts */}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '140px', overflowY: 'auto', marginBottom: '8px' }}>
+                            {feedPosts.map(post => (
+                              <div key={post.id} style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card, display: 'flex', gap: '8px' }}>
+                                <div style={{ width: '20px', height: '20px', borderRadius: '50%', backgroundColor: accent, color: 'white', fontSize: '0.55rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800 }}>
+                                  {post.avatar}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                                    <span style={{ fontWeight: 700, fontSize: '0.6rem' }}>{post.author}</span>
+                                    <button 
+                                      onClick={() => handleLikePost(post.id)}
+                                      style={{ display: 'flex', alignItems: 'center', gap: '2px', color: post.liked ? '#f43f5e' : s.textMuted, fontSize: '0.55rem' }}
+                                    >
+                                      <Heart size={10} fill={post.liked ? '#f43f5e' : 'none'} /> {post.likes}
+                                    </button>
+                                  </div>
+                                  <p style={{ fontSize: '0.55rem', color: s.textMuted, marginTop: '2px', lineHeight: 1.3 }}>{post.content}</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Write Post Form */}
+                          <form onSubmit={handleCreatePost} style={{ display: 'flex', gap: '6px' }}>
+                            <input 
+                              type="text" 
+                              placeholder="Write a message to feed..." 
+                              value={newPostInput}
+                              onChange={(e) => setNewPostInput(e.target.value)}
+                              style={{ flex: 1, padding: '4px 8px', fontSize: '0.6rem', borderRadius: '4px', border: `1px solid ${s.border}`, background: s.card, color: s.text }}
+                            />
+                            <button type="submit" style={{ backgroundColor: accent, color: 'white', padding: '4px 8px', borderRadius: '4px', fontSize: '0.6rem', display: 'flex', alignItems: 'center', gap: '2px' }}>
+                              <Send size={10} /> Send
+                            </button>
+                          </form>
+                        </div>
+                      )}
+
+                      {/* Admin Users Management Tab */}
                       {activeTab === 'users' && (
                         <div>
                           {features.includes('database') ? (
@@ -758,19 +1059,15 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                           ) : (
                             <div style={{ padding: '16px', textAlign: 'center', border: `1px dashed ${s.border}`, borderRadius: '8px' }}>
                               <Users size={16} color={accent} style={{ marginBottom: '4px' }} />
-                              <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Dynamic user tables require the 'Secure Database Integration' to store accounts list.</div>
+                              <div style={{ fontSize: '0.65rem', color: s.textMuted }}>Database integration is required to list users here.</div>
                             </div>
                           )}
                         </div>
                       )}
 
-                      {/* 3. Settings Config Tab */}
+                      {/* Settings Config Tab */}
                       {activeTab === 'settings' && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <span style={{ fontSize: '0.65rem' }}>System Debug Alerts</span>
-                            <input type="checkbox" defaultChecked style={{ accentColor: accent }} />
-                          </div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <span style={{ fontSize: '0.65rem' }}>Auto Backups (Weekly)</span>
                             <input type="checkbox" defaultChecked style={{ accentColor: accent }} />
@@ -789,11 +1086,11 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             </div>
           )}
 
-          {/* MOCKUP CONTENT 4: SUBSCRIPTION CARE / GROWTH PLAN CLIENT PORTAL */}
+          {/* MOCKUP CONTENT 4: RETAINER PORTAL (SUBSCRIPTIONS) */}
           {billingModel === 'subscription' && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
               
-              {/* Subscription Portal Header */}
+              {/* Portal Header */}
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 16px', borderBottom: `1px solid ${s.border}`, alignItems: 'center', backgroundColor: s.card }}>
                 <div style={{ fontWeight: 800, fontSize: '0.8rem', color: s.text, display: 'flex', alignItems: 'center', gap: '4px' }}>
                   <div style={{ width: '8px', height: '8px', borderRadius: '4px', backgroundColor: accent }}></div>
@@ -805,10 +1102,8 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                 </div>
               </div>
 
-              {/* Portal Content */}
+              {/* Retainer contents */}
               <div style={{ flex: 1, padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                
-                {/* Retainer Details Row */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '10px' }}>
                   <div style={{ padding: '8px', border: `1px solid ${s.border}`, borderRadius: '6px', background: s.card }}>
                     <div style={{ fontSize: '0.55rem', color: s.textMuted }}>Retainer Subscription Plan</div>
@@ -822,7 +1117,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                   </div>
                 </div>
 
-                {/* Task Queue Backlog */}
+                {/* Backlog List */}
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                     <span style={{ fontSize: '0.65rem', fontWeight: 700, color: s.text }}>Active Task Board ({subTasks.length})</span>
@@ -849,7 +1144,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
                     ))}
                   </div>
 
-                  {/* Add Task to Retainer Form */}
+                  {/* Add Task Form */}
                   <form onSubmit={handleAddTask} style={{ display: 'flex', gap: '6px', marginTop: '8px' }}>
                     <input 
                       type="text" 
@@ -869,7 +1164,7 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
             </div>
           )}
 
-          {/* CHECKOUT MODAL OVERLAY */}
+          {/* CHECKOUT STRIPE SUCCESS SCREEN OVERLAY */}
           {checkoutStep !== 'idle' && (
             <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', zIndex: 10 }}>
               <div style={{ background: s.bg, border: `1px solid ${s.border}`, borderRadius: '12px', padding: '20px', width: '100%', maxWidth: '280px', textAlign: 'center' }}>
@@ -979,7 +1274,6 @@ export default function InteractivePreview({ packageId, features, pagesCount, bi
         </div>
       </div>
 
-      {/* Embedded CSS animation for mock loader */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float {
           0%, 100% { transform: translateY(0px); }

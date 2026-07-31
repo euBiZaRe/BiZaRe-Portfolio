@@ -501,17 +501,16 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
       <style dangerouslySetInnerHTML={{__html: `
         @media (max-width: 1200px) {
           .configurator-grid {
-            grid-template-columns: 1.2fr 0.8fr !important;
+            grid-template-columns: 1fr !important;
             gap: 30px !important;
           }
           .preview-column {
-            grid-column: span 2 !important;
             position: static !important;
-            order: 3 !important;
+            order: 2 !important;
           }
           .summary-column {
-            grid-column: span 1 !important;
-            order: 2 !important;
+            position: static !important;
+            order: 3 !important;
           }
         }
         @media (max-width: 960px) {
@@ -520,11 +519,11 @@ export default function Configurator({ initialScope, onSaveScope, billingModel, 
             gap: 40px !important;
           }
           .preview-column {
-            grid-column: span 1 !important;
+            position: static !important;
             order: 2 !important;
           }
           .summary-column {
-            grid-column: span 1 !important;
+            position: static !important;
             order: 3 !important;
           }
         }
